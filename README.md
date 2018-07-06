@@ -1,4 +1,4 @@
-# bcu
+# The 'Blockchain University' project
 
 ![Project concept diagram](docs_img/comparison_moocon.png)
 
@@ -13,7 +13,7 @@ curriculum personalisation, and learner privacy.
 ![Project architecture diagram](docs_img/architecture.png)
 
 Components built:
-- Blockchain network schema (Hyperledger Composer deployment definitions)
-- Learner's Client Application (Vue.js web app)
-- Teacher's Client Application (Vue.js web app)
-- Example Automated Marking Server (Express.js web app)
+- [Blockchain network schema (Hyperledger Composer deployment definitions)](moocon-beta/)
+- [Learner's Client Application (Vue.js web app)](moocon-learner-client/)
+- [Teacher's Client Application (Vue.js web app)](moocon-teacher-client/)
+- [Example Automated Marking Server (Express.js web app)](moocon-js-marking/)
