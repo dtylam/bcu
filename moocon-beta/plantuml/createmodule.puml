@@ -1,0 +1,30 @@
+@startuml
+skinparam activityBackgroundColor WhiteSmoke
+title
+Create Module Transaction
+end title
+
+note left
+    <b>Transaction Parameters:</b>
+    CourseModule mod
+    {ModuleUnit units,
+      Assessment assessment}
+end note
+(*) -right-> "check for pre-requisites\n and co-requisites conflicts"
+-right->[conflicts exist] (*1)
+note right
+    <b>Transaction</b>
+    <b>Rejected</b>
+end note
+"check for pre-requisites\n and co-requisites conflicts"-->[no conflicts] if "curriculum already exists" then
+-->[true] "Update curriculum"
+-->(*2)
+else
+-->[false] "Create curriculum"
+-->(*2)
+note right
+    <b>Emit Event:</b>
+    CurriculumProposed
+    {Curriculum curriculum}
+end note
+@enduml

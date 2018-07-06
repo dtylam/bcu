@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="220"
+   height="220"
+   viewBox="0 0 58.20833 58.208336"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="favicon.svg"
+   inkscape:export-filename="/home/dtylam/GitHub/moocon-learner-client/img/favicon.png"
+   inkscape:export-xdpi="6.9818182"
+   inkscape:export-ydpi="6.9818182">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2"
+     inkscape:cx="-85.95013"
+     inkscape:cy="135.59312"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="966"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-238.79165)">
+    <g
+       id="g5267"
+       transform="matrix(1.8659209,0,0,1.8659209,-18.498856,-232.68523)">
+      <rect
+         y="257.74066"
+         x="15.614387"
+         height="11.501197"
+         width="7.5906506"
+         id="rect815-3"
+         style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#00325b;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:1.41420996;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         y="254.02666"
+         x="39.10294"
+         height="28.497892"
+         width="1.1566386"
+         id="rect815-3-7-3"
+         style="opacity:1;fill:#be0f34;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.1416496;stroke-linejoin:round;stroke-miterlimit:1.41420996;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         transform="translate(-0.02709161)"
+         id="g4670">
+        <rect
+           style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#00325b;stroke-width:0.5;stroke-linejoin:round;stroke-miterlimit:1.41420996;stroke-dasharray:none;stroke-opacity:1"
+           id="rect815-3-5"
+           width="7.5906506"
+           height="11.501197"
+           x="27.47546"
+           y="269.74185" />
+        <rect
+           style="opacity:1;fill:#00325b;fill-opacity:1;fill-rule:evenodd;stroke:#00325b;stroke-width:0.5;stroke-linejoin:round;stroke-miterlimit:1.41420996;stroke-dasharray:none;stroke-opacity:1"
+           id="rect815-3-2"
+           width="7.5906506"
+           height="11.501197"
+           x="27.475224"
+           y="254.20583" />
+      </g>
+      <rect
+         transform="matrix(0.64280826,0.76602712,-0.76606177,0.64276696,0,0)"
+         y="153.96991"
+         x="220.00351"
+         height="0.60001928"
+         width="6.5001469"
+         id="rect921-6"
+         style="opacity:1;fill:#00325b;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.16288161;stroke-linejoin:miter;stroke-miterlimit:1.41420996;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         y="254.00562"
+         x="10.743006"
+         height="18.088017"
+         width="0.90042955"
+         id="rect815-3-7"
+         style="opacity:1;fill:#be0f34;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.09957045;stroke-linejoin:round;stroke-miterlimit:1.41420996;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

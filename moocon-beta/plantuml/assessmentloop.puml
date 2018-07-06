@@ -1,0 +1,75 @@
+@startuml assessmentloop
+skinparam packageStyle rectangle
+title
+Transactions and Events in the Assessment Use Case
+end title
+
+actor Learner
+database Blockchain
+actor Teacher
+
+== Design==
+
+Teacher -[#blue]> Blockchain : CreateModule()
+rnote over Blockchain
+    Asset CourseModule {
+        Assets [] ModuleUnit {
+            Asset Assessment
+        }    }
+endnote
+
+== Delivery==
+Blockchain -[#grey]> Learner : READ Assets
+note right #pink
+Course content pulled
+from external servers
+with links on blockchain
+endnote
+
+== Assessment==
+
+loop Attempts
+Learner -[#blue]> Blockchain : AddSubmission()
+rnote over Blockchain: Asset Submission
+Blockchain -> Learner : SubmissionUploaded Event
+alt AutoAssessment
+    Blockchain -[#grey]> Blockchain : AutoAssessRequest
+    note left #pink
+    Pre-committed test file
+    and submission sent to
+    automatic testing server
+endnote
+else AssessorAssessment
+Blockchain -> Teacher : SubmissionUploaded Event
+Teacher -[#blue]> Blockchain : SubmitResult()
+note left #pink
+Pre-committed marking
+scheme enforced
+endnote
+else PeerAssessment
+' Blockchain -> Learner : PeerFeedbackRequest Event
+note over Blockchain #lightgrey
+    Future Work*
+    endnote
+    ' Learner -[#blue]> Blockchain : SubmitPeerFeedback()
+else SelfAssessment
+    note over Blockchain #lightgrey
+        Future Work*
+        endnote
+
+    end
+    Blockchain -> Learner : ResultAvailable Event
+end
+
+== Credentials==
+Blockchain -> Teacher : CourseModuleCompleted Event
+Teacher -[#blue]> Blockchain : GenCertificate()
+rnote over Blockchain: Asset Certificate
+Blockchain -> Learner : NewCertificate Event
+
+center footer
+    <font color=blue>-></font> Transaction()
+    <font color=maroon>-></font> Event
+endfooter
+
+@enduml

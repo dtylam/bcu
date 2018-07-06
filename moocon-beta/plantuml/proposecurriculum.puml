@@ -1,0 +1,31 @@
+@startuml
+skinparam activityBackgroundColor WhiteSmoke
+title
+Propose Curriculum Transaction
+end title
+
+note left
+    <b>Transaction Parameters:</b>
+    Learner learner
+    Teacher teacher
+    String existingCurrId
+    String[] modIds
+end note
+(*) -right-> "check for pre-requisites\n and co-requisites conflicts"
+-right->[conflicts exist] (*1)
+note right
+<b>Transaction</b>
+<b>Rejected</b>
+end note
+"check for pre-requisites\n and co-requisites conflicts"-->[no conflicts] if "curriculum already exists" then
+-->[true] "Update curriculum\n blockchain object"
+-->(*2)
+else
+-->[false] "Create curriculum\n blockchain object"
+-->(*2)
+note right
+<b>Emit Event:</b>
+CurriculumProposed 
+{Curriculum curriculum}
+end note
+@enduml

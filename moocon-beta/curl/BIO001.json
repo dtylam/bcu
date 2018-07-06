@@ -1,0 +1,63 @@
+{
+    "$class": "org.moocon.core.CreateModule",
+    "mod": {
+        "$class": "org.moocon.core.CourseModule",
+        "modId": "BIO001",
+        "teachers": [
+            "resource:org.moocon.core.Teacher#T02"
+        ],
+        "modTitle": "Exploring Genetics",
+        "cost": 10,
+        "prerequisites": [],
+        "corequisites": [],
+        "learningObjectives": [
+            "Understanding of the key principles underlying the theory and practice of genetics.",
+            "Awareness of recent advances in genetics."
+        ],
+        "units": [
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "BIO001A",
+                "mod": "resource:org.moocon.core.CourseModule#BIO001",
+                "unitTitle": "Basic Principles of Genetics",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "BIO001_TEST001",
+                    "unit": "resource:org.moocon.core.ModuleUnit#BIO001A",
+                    "terminal": false,
+                    "weighting": 100,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Molecules to populations and species",
+                        "How genetics is studied through experiments on model organisms"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            }
+        ]
+    }
+}

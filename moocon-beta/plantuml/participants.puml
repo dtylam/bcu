@@ -1,0 +1,57 @@
+@startuml participants
+'** Auto generated content, any changes may be lost **'
+!define DATE %date[EEE, MMM d, ''yy 'at' HH:mm]%
+skinparam titleBackgroundColor LightYellow
+skinparam titleBorderThickness 0.5
+skinparam titleBorderRoundCorner 6
+skinparam titleFontColor Black
+skinparam titleFontSize 18
+skinparam classBackgroundColor WhiteSmoke
+
+' title
+' Participant Definitions
+' end title
+
+package hyperledger.composer.system.Participant{
+
+class User<abstract> << (P,lightblue) >> {
+    + {field} String uId (key)
+    + String firstName
+    + String lastName
+    + String nid
+}
+' User --|> org.hyperledger.composer.system.Participant
+' class org.hyperledger.composer.system.Participant << (P,lightblue) >>
+
+class Learner << (P,lightblue) >> {
+    + CourseModule[] mods
+    + Submission[] subs
+    + Certificate[] certs
+    + Double balance
+   + Integer[] acLevels
+   + String[] priviledgedReaderIds
+}
+Learner --|> User
+' Learner o-- "many" CourseModule
+' Learner o-- "many" Submission
+' Learner o-- "many" Certificate
+
+class Teacher << (P,lightblue) >> {
+    + CourseModule[] mods
+    + String organisation
+}
+Teacher --|> User
+' Teacher o-- "many" CourseModule
+
+class Reader << (P,lightblue) >> {
+   + String organisation
+}
+Reader --|> User
+
+}
+
+' class CourseModule << (A,green) >>
+' class Submission << (A,green) >>
+' class Certificate << (A,green) >>
+
+@enduml

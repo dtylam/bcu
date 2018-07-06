@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>BlockChain University</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
+</head>
+
+<body>
+  <div id="app">
+    <md-app md-waterfall md-mode="fixed">
+      <md-app-toolbar class="md-primary">
+        <span class="md-title" style="flex: 1">{{ toolbarText }}</span>
+        <md-menu md-direction="bottom-end">
+          <md-button class="md-icon-button md-primary" md-menu-trigger>
+            <md-icon>notifications_none</md-icon>
+            <!-- <md-icon v-else>notifications_none</md-icon>             -->
+          </md-button>
+          <md-menu-content style="min-width: 32vw; min-height: 48vh; background-color: white;">
+            <p style="text-align: center;">Notifications</p>
+            <md-list class="md-triple-line">
+              <md-divider class="md-inset"></md-divider>
+              <div v-for="e in networkEvents" :key="e.id">
+                <md-list-item>
+                  <md-avatar>
+                    <md-icon class="md-primary">{{e.icon}}</md-icon>
+                  </md-avatar>
+                  <div class="md-list-item-text">
+                    <span>{{e.title}}</span>
+                    <span>{{e.sub}}</span>
+                    <p>{{e.p}}</p>
+                  </div>
+                </md-list-item>
+                <md-divider class="md-inset"></md-divider>
+              </div>
+            </md-list>
+          </md-menu-content>
+        </md-menu>
+      </md-app-toolbar>
+
+      <md-app-drawer md-permanent="full" style="max-width: 250px;">
+        <md-toolbar class="md-transparent md-large" md-elevation="0">
+          <img src="img/logo.png" v-on:click="selectMyCourses" style="width: 90%; display: block; margin: 0 auto;" />
+        </md-toolbar>
+
+        <md-list>
+          <md-list-item v-show="loggedIn">
+            <md-avatar>
+              <img src="https://placeimg.com/40/40/people/1" alt="People">
+            </md-avatar>
+
+            <span class="md-list-item-text">Jo Smith</span>
+            <!-- <md-button class="md-icon-button md-list-action">
+                    <md-icon class="md-primary">chat_bubble</md-icon>
+                  </md-button> -->
+          </md-list-item>
+
+          <md-divider style="margin-top: 8px;" v-show="loggedIn"></md-divider>
+          
+          <md-subheader v-show="loggedIn">Learn</md-subheader>
+
+          <md-list-item v-on:click="selectMyCourses" v-show="loggedIn">
+            <md-icon>book</md-icon>
+            <span class="md-list-item-text">Ongoing Courses</span>
+          </md-list-item>
+
+          <md-list-item v-on:click="selectMySubmissions" v-show="loggedIn">
+            <md-icon>note_add</md-icon>
+            <span class="md-list-item-text">My Submissions</span>
+          </md-list-item>
+
+          <md-divider style="margin-top: 8px;"></md-divider>
+          <md-subheader>Plan</md-subheader>
+
+          <md-list-item v-on:click="selectAllCourses">
+            <md-icon>view_list</md-icon>
+            <span class="md-list-item-text">Course Catalogue</span>
+          </md-list-item>
+
+          <md-list-item v-on:click="selectMyCurriculum" v-show="loggedIn">
+            <md-icon>school</md-icon>
+            <span class="md-list-item-text">My Curriculum</span>
+          </md-list-item>
+
+          <md-divider style="margin-top: 8px;"></md-divider>
+          <md-subheader v-show="loggedIn">Records</md-subheader>
+
+          <md-list-item v-on:click="selectMyCerts" v-show="loggedIn">
+            <md-icon>card_membership</md-icon>
+            <span class="md-list-item-text">My Certificates</span>
+          </md-list-item>
+
+          <md-list-item v-on:click="selectAC" v-show="loggedIn">
+            <md-icon>tune</md-icon>
+            <span class="md-list-item-text">Access Control</span>
+          </md-list-item>
+
+          <md-list-item v-on:click="selectHistorian" v-show="loggedIn">
+            <md-icon>timeline</md-icon>
+            <span class="md-list-item-text">My History</span>
+          </md-list-item>
+
+          <md-divider style="margin-top: 8px;" v-show="loggedIn"></md-divider>
+
+          <md-list-item v-on:click="refocus" v-show="loggedIn">
+            <md-icon>transfer_within_a_station</md-icon>
+            <span class="md-list-item-text">Refocus Session (dev)</span>
+          </md-list-item>
+          <md-progress-bar v-if="refocusProgress" class="md-accent" md-mode="query"></md-progress-bar>
+
+          <md-list-item v-on:click="logOut" v-show="loggedIn">
+            <md-icon>reply</md-icon>
+            <span class="md-list-item-text">Log Out</span>
+          </md-list-item>
+        </md-list>
+      </md-app-drawer>
+
+      <md-app-content id="main-content" style="padding: 0px !important;">
+        <component v-bind:is="currentView" style="min-height: 92vh;">
+          <!-- component changes when vm.currentView changes! -->
+        </component>
+        <!-- {{ historianRecord }} -->
+        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p> -->
+        <!-- <md-empty-state v-show="!loggedIn" md-icon="add_to_queue" md-label="Start your first course today!" md-description="">
+          <md-button class="md-primary md-raised" v-on:click="loggedIn = true">Sign Up</md-button>
+        </md-empty-state> -->
+
+      </md-app-content>
+    </md-app>
+  </div>
+  <script src="/dist/build.js"></script>
+</body>
+<!--
+   \\\\
+ _  ||||
+ \`-'''|
+  \   /
+   \  \
+    \  \
+     \@dtylam
+-->
+
+</html>

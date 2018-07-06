@@ -1,0 +1,17 @@
+/** 
+Queries for Moocon
+*/
+
+query selectMySubmissions {
+  description: "Select submissions belonging to a learner, uIdr required"
+  statement:
+      SELECT org.moocon.core.Submission
+      WHERE (learner == _$uIdr)
+}
+
+// query selectCourseSubmissions {
+//   description: "Select all learners' submissions for a course, modIdr required"
+//   statement:
+//       SELECT org.moocon.core.Submission
+//       WHERE (courseModule == _$modIdr)
+// }

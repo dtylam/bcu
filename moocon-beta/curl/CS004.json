@@ -1,0 +1,108 @@
+{
+    "$class": "org.moocon.core.CreateModule",
+    "mod": {
+        "$class": "org.moocon.core.CourseModule",
+        "modId": "CS004",
+        "teachers": [
+            "resource:org.moocon.core.Teacher#T02"
+        ],
+        "modTitle": "Intermediate Android Applications",
+        "cost": 20,
+        "prerequisites": ["resource:org.moocon.core.CourseModule#CM003"],
+        "corequisites": [],
+        "learningObjectives": [
+            "Program core Android app components, such as intents, activities, and broadcast receivers together with Android concurrency frameworks and basic Java file I/O classes.",
+            "Use of the Git version control system."
+        ],
+        "units": [
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "CS004A",
+                "mod": "resource:org.moocon.core.CourseModule#CS004",
+                "unitTitle": "Android App Components",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "CS004_TEST001",
+                    "unit": "resource:org.moocon.core.ModuleUnit#CM001A",
+                    "terminal": false,
+                    "weighting": 50,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Intents",
+                        "Activities",
+                        "Broadcast Receivers"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "CS004B",
+                "mod": "resource:org.moocon.core.CourseModule#CS004",
+                "unitTitle": "Git VCS",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "CS004_TEST002",
+                    "unit": "resource:org.moocon.core.ModuleUnit#CS004B",
+                    "terminal": false,
+                    "weighting": 50,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Git basic commands",
+                        "Branching",
+                        "Merge and conflicts"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            }
+        ]
+    }
+}

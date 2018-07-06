@@ -1,0 +1,39 @@
+@startuml personalisationloop
+skinparam packageStyle rectangle
+title
+Transactions and Events in the Curriculum Personalisation Use Case
+end title
+
+actor Learner
+database Blockchain
+actor Teacher
+
+Learner -[#blue]> Blockchain : ProposeCurriculum()
+rnote over Blockchain
+    Asset Curriculum {
+        [Assets CourseModule {}]
+    }
+endnote
+Blockchain -> Teacher : CurriculumProposed Event
+
+loop Negotiations
+    Teacher -[#blue]> Blockchain : ProposeCurriculum()
+    Blockchain -> Learner : CurriculumProposed Event
+    Learner -[#blue]> Blockchain : ProposeCurriculum()
+    Blockchain -> Teacher : CurriculumProposed Event
+end
+
+Teacher -[#blue]> Blockchain : ApproveCurriculum()
+Blockchain -> Learner : CurriculumApproved Event
+Blockchain -> Learner : BalanceChanges Event
+note right #pink
+Student enrolled
+into courses
+endnote
+
+center footer
+    <font color=blue>-></font> Transaction()
+    <font color=maroon>-></font> Event
+endfooter
+
+@enduml

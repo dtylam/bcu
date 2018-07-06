@@ -1,0 +1,152 @@
+{
+    "$class": "org.moocon.core.CreateModule",
+    "mod": {
+        "$class": "org.moocon.core.CourseModule",
+        "modId": "BUS001",
+        "teachers": [
+            "resource:org.moocon.core.Teacher#T04"
+        ],
+        "modTitle": "Digital Branding and Engagement",
+        "cost": 20,
+        "prerequisites": [],
+        "corequisites": [],
+        "learningObjectives": [
+            "The inter-relationship between paid, owned and earned media.",
+            "Consumer change and how it is altering brand communications.",
+            "Content marketing and how owned content can be distributed across company-owned digital media assets.",
+            "The value of Earned Media which interests your audience ."
+        ],
+        "units": [
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "BUS001A",
+                "mod": "resource:org.moocon.core.CourseModule#BUS001",
+                "unitTitle": "The Digital Consumer",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "BUS001_TEST001",
+                    "unit": "resource:org.moocon.core.ModuleUnit#BUS001A",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Consumer empowerment",
+                        "Consumer participation and engagement"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "BUS001B",
+                "mod": "resource:org.moocon.core.CourseModule#BUS001",
+                "unitTitle": "Content Marketing",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "BUS001_TEST002",
+                    "unit": "resource:org.moocon.core.ModuleUnit#BUS001B",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Different strategies for content distribution",
+                        "Challenges associated with content marketing"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "BUS001C",
+                "mod": "resource:org.moocon.core.CourseModule#BUS001",
+                "unitTitle": "Owned vs Earned Media",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "BUS001_TEST003",
+                    "unit": "resource:org.moocon.core.ModuleUnit#BUS001C",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Impact of owned media decision making",
+                        "Range of engagement platforms",
+                        "Strategies for shaping earned media"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            }
+        ]
+    }
+}

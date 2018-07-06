@@ -1,0 +1,47 @@
+@startuml concepts
+'** Auto generated content, any changes may be lost **'
+!define DATE %date[EEE, MMM d, ''yy 'at' HH:mm]%
+skinparam titleBackgroundColor LightYellow
+skinparam titleBorderThickness 0.5
+skinparam titleBorderRoundCorner 6
+skinparam titleFontColor Black
+skinparam titleFontSize 18
+' skinparam backgroundColor #EEEBDC
+' skinparam handwritten true
+skinparam classBackgroundColor WhiteSmoke
+' title
+' Concept Definitions
+' end title
+
+package hyperledger.composer.system.Concept{
+
+    class AssessmentResult <abstract>{
+        + Boolean passed
+        + String feedbackMd
+    }
+    class ScoreResult {
+        + Double score
+        + Double maxScore
+    }
+    ScoreResult --|> AssessmentResult
+    class GradeResult {
+        + String grade
+        + GradeDescriptor[] gradeDescriptors
+    }
+    GradeResult --|> AssessmentResult
+    class PassFailResult {
+        + GradeDescriptor[] gradeDescriptors
+    }
+    PassFailResult --|> AssessmentResult
+    class GradeDescriptor {
+        + String grade
+        + String descriptions
+    }
+    class MarkingCriterion {
+        + String heading
+        + String details
+        + Integer weighting
+    }
+}
+
+@enduml

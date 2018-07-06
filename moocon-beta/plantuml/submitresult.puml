@@ -1,0 +1,48 @@
+@startuml
+skinparam activityBackgroundColor WhiteSmoke
+title
+Submit Result Transaction
+end title
+
+start
+note left
+    <b>Transaction Parameters:</b>
+    Submission submission
+    Teacher assessor
+    Integer[] marks
+    String feedbackMd
+end note
+if (What is the type of assessment) then (Others)
+    end
+    note right
+        <b>Transaction</b>
+        <b>Rejected</b>
+    end note
+else (Assessor Assessment)
+    :calculate overall result\nbased on grade descriptors\nand marking criteria;
+    :update submission\nblockchain object with grades;
+    note left
+        <b>Emit Event:</b>
+        ResultAvailable
+        { Submission submission
+           String unitId
+           String details }
+    end note
+endif
+if (Is the assessment\nthe terminal assessment\nfor the unit?) then (yes)
+    if (The overall result of\nthe module is a pass) then (yes)
+        stop
+        note left
+            <b>Emit Event:</b>
+            CourseModuleCompleted 
+            { Teacher teacherAssigned
+               Submission submission
+               String modId }
+        end note
+    ' else (no)
+
+    endif
+' else (no)
+endif
+
+@enduml

@@ -1,0 +1,266 @@
+@startuml composer
+'** Auto generated content, any changes may be lost **'
+!define DATE %date[EEE, MMM d, ''yy 'at' HH:mm]%
+skinparam titleBackgroundColor LightYellow
+skinparam titleBorderThickness 0.5
+skinparam titleBorderRoundCorner 6
+skinparam titleFontColor Black
+skinparam titleFontSize 18
+title
+Business Network Definition for 'org.moocon.core.cto'
+end title
+class org.moocon.core.User << (P,lightblue) >> {
+   + String uId
+   + String firstName
+   + String lastName
+   + String nid
+}
+org.moocon.core.User --|> org.hyperledger.composer.system.Participant
+class org.moocon.core.Learner << (P,lightblue) >> {
+   + CourseModule[] mods
+   + Submission[] subs
+   + Certificate[] certs
+   + Double balance
+   + Integer[] acLevels
+   + String[] privilledgedReaders
+}
+org.moocon.core.Learner --|> org.moocon.core.User
+class org.moocon.core.Teacher << (P,lightblue) >> {
+   + CourseModule[] mods
+   + String organisation
+}
+org.moocon.core.Teacher --|> org.moocon.core.User
+class org.moocon.core.Reader << (P,lightblue) >> {
+   + String organisation
+}
+org.moocon.core.Reader --|> org.moocon.core.User
+class org.moocon.core.CreateModule << (T,yellow) >> {
+   + CourseModule mod
+}
+org.moocon.core.CreateModule --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.CourseModule << (A,green) >> {
+   + String modId
+   + Teacher[] teachers
+   + CourseModule[] prerequisites
+   + CourseModule[] corequisites
+   + String modTitle
+   + Double cost
+   + String[] learningObjectives
+   + ModuleUnit[] units
+}
+org.moocon.core.CourseModule --|> org.hyperledger.composer.system.Asset
+class org.moocon.core.ModuleUnit << (A,green) >> {
+   + String unitId
+   + CourseModule mod
+   + String unitTitle
+   + String materialMd
+   + Assessment assessment
+}
+org.moocon.core.ModuleUnit --|> org.hyperledger.composer.system.Asset
+class org.moocon.core.Assessment << (A,green) >> {
+   + String assessId
+   + ModuleUnit unit
+   + Boolean terminal
+   + Integer weighting
+   + String resultType
+   + String[] knowledgeRequired
+   + String detailsMd
+}
+org.moocon.core.Assessment --|> org.hyperledger.composer.system.Asset
+class org.moocon.core.AddSubmission << (T,yellow) >> {
+   + Learner learner
+   + ModuleUnit unit
+   + String content
+   + String comments
+}
+org.moocon.core.AddSubmission --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.Submission << (A,green) >> {
+   + String subId
+   + Learner learner
+   + Teacher teacherAssigned
+   + ModuleUnit unit
+   + String content
+   + String comments
+   + DateTime timeAdded
+   + DateTime timeAssessed
+   + AssessmentResult result
+}
+org.moocon.core.Submission --|> org.hyperledger.composer.system.Asset
+class org.moocon.core.SubmissionUploaded {
+   + Submission submission
+   + String unitId
+   + String teacherId
+}
+org.moocon.core.SubmissionUploaded --|> org.hyperledger.composer.system.Event
+class org.moocon.core.AutoAssessment << (A,green) >> {
+   + String testType
+   + String testFile
+   + GradeDescriptor[] gradeDescriptors
+   + MarkingCriterion[] criteria
+   + Integer passingStandard
+}
+org.moocon.core.AutoAssessment --|> org.moocon.core.Assessment
+class org.moocon.core.AutoAssessRequest << (A,green) >> {
+   + String reqId
+   + Submission submission
+   + String content
+   + String testFile
+   + String response
+}
+org.moocon.core.AutoAssessRequest --|> org.hyperledger.composer.system.Asset
+class org.moocon.core.AssessorAssessment << (A,green) >> {
+   + String testType
+   + GradeDescriptor[] gradeDescriptors
+   + MarkingCriterion[] criteria
+   + Integer passingStandard
+}
+org.moocon.core.AssessorAssessment --|> org.moocon.core.Assessment
+class org.moocon.core.SubmitResult << (T,yellow) >> {
+   + Submission submission
+   + Teacher assessor
+   + Integer[] marks
+   + String feedbackMd
+}
+org.moocon.core.SubmitResult --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.PeerAssessment << (A,green) >> {
+   + GradeDescriptor[] gradeDescriptors
+   + MarkingCriterion[] criteria
+   + Integer passingStandard
+}
+org.moocon.core.PeerAssessment --|> org.moocon.core.Assessment
+class org.moocon.core.PeerFeedbackRequest {
+   + Submission submission
+   + Learner peerAssessor
+}
+org.moocon.core.PeerFeedbackRequest --|> org.hyperledger.composer.system.Event
+class org.moocon.core.SubmitPeerFeedback << (T,yellow) >> {
+   + Submission submission
+   + Learner peerAssessor
+   + String gradesMd
+   + String comments
+}
+org.moocon.core.SubmitPeerFeedback --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.SelfAssessment << (A,green) >> {
+}
+org.moocon.core.SelfAssessment --|> org.moocon.core.Assessment
+class org.moocon.core.ResultAvailable {
+   + Submission submission
+   + String unitId
+   + String details
+}
+org.moocon.core.ResultAvailable --|> org.hyperledger.composer.system.Event
+class org.moocon.core.CourseModuleCompleted {
+   + Teacher teacherAssigned
+   + Submission submission
+   + String modId
+}
+org.moocon.core.CourseModuleCompleted --|> org.hyperledger.composer.system.Event
+class org.moocon.core.GenCertificate << (T,yellow) >> {
+   + Submission[] subs
+   + Curriculum curriculum
+   + Teacher orderer
+}
+org.moocon.core.GenCertificate --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.Certificate << (A,green) >> {
+   + String certId
+   + Learner learner
+   + Teacher teacher
+   + CourseModule[] mods
+   + Submission[] subs
+   + Curriculum curriculum
+   + AssessmentResult overallResult
+   + String fineprintMd
+}
+org.moocon.core.Certificate --|> org.hyperledger.composer.system.Asset
+class org.moocon.core.NewCertificate {
+   + CourseModule mod
+   + Certificate cert
+}
+org.moocon.core.NewCertificate --|> org.hyperledger.composer.system.Event
+class org.moocon.core.AssessmentResult {
+   + Boolean passed
+   + String feedbackMd
+}
+class org.moocon.core.ScoreResult {
+   + Double score
+   + Double maxScore
+}
+org.moocon.core.ScoreResult --|> org.moocon.core.AssessmentResult
+class org.moocon.core.GradeResult {
+   + String grade
+   + GradeDescriptor[] gradeDescriptors
+}
+org.moocon.core.GradeResult --|> org.moocon.core.AssessmentResult
+class org.moocon.core.PassFailResult {
+   + GradeDescriptor[] gradeDescriptors
+}
+org.moocon.core.PassFailResult --|> org.moocon.core.AssessmentResult
+class org.moocon.core.GradeDescriptor {
+   + String grade
+   + String descriptions
+}
+class org.moocon.core.MarkingCriterion {
+   + String heading
+   + String details
+   + Integer weighting
+}
+class org.moocon.core.Curriculum << (A,green) >> {
+   + String currId
+   + Teacher teacher
+   + Learner learner
+   + String[] modIds
+   + String curTitle
+   + String notes
+   + String programmeOutcome
+   + Boolean approved
+}
+org.moocon.core.Curriculum --|> org.hyperledger.composer.system.Asset
+class org.moocon.core.ProposeCurriculum << (T,yellow) >> {
+   + Learner learner
+   + Teacher teacher
+   + String existingCurrId
+   + String[] modIds
+}
+org.moocon.core.ProposeCurriculum --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.CurriculumProposed {
+   + Curriculum curriculum
+}
+org.moocon.core.CurriculumProposed --|> org.hyperledger.composer.system.Event
+class org.moocon.core.ApproveCurriculum << (T,yellow) >> {
+   + Curriculum curriculum
+}
+org.moocon.core.ApproveCurriculum --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.CurriculumApproved {
+   + Curriculum curriculum
+}
+org.moocon.core.CurriculumApproved --|> org.hyperledger.composer.system.Event
+class org.moocon.core.BalanceChanges {
+   + User user
+   + Double oldBalance
+   + Double newBalance
+   + String details
+}
+org.moocon.core.BalanceChanges --|> org.hyperledger.composer.system.Event
+class org.moocon.core.BeginModule << (T,yellow) >> {
+   + Learner learner
+   + CourseModule mod
+}
+org.moocon.core.BeginModule --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.AutoAssess << (T,yellow) >> {
+   + Submission submission
+}
+org.moocon.core.AutoAssess --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.EditModule << (T,yellow) >> {
+   + CourseModule mod
+}
+org.moocon.core.EditModule --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.EditUnit << (T,yellow) >> {
+   + ModuleUnit unit
+}
+org.moocon.core.EditUnit --|> org.hyperledger.composer.system.Transaction
+class org.moocon.core.EditAssessment << (T,yellow) >> {
+   + Assessment assessment
+}
+org.moocon.core.EditAssessment --|> org.hyperledger.composer.system.Transaction
+right footer DATE
+@enduml

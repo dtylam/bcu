@@ -1,0 +1,151 @@
+{
+    "$class": "org.moocon.core.CreateModule",
+    "mod": {
+        "$class": "org.moocon.core.CourseModule",
+        "modId": "PHIL001",
+        "teachers": [
+            "resource:org.moocon.core.Teacher#T04"
+        ],
+        "modTitle": "Human Rights Theory and Philosophy",
+        "cost": 10,
+        "prerequisites": [],
+        "corequisites": [],
+        "learningObjectives": [
+            "Describe and critique human rights theories and philosophies.",
+            "Critically analyse political, policy and moral issues using a human rights framework."
+        ],
+        "units": [
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "PHIL001A",
+                "mod": "resource:org.moocon.core.CourseModule#PHIL001",
+                "unitTitle": "The Universal Declaration of Human Rights",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "PHIL001_TEST001",
+                    "unit": "resource:org.moocon.core.ModuleUnit#PHIL001A",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "What do we mean by human rights?",
+                        "Modern perspectives on human rights"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "PHIL001B",
+                "mod": "resource:org.moocon.core.CourseModule#PHIL001",
+                "unitTitle": "Postmodern Critiques",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "PHIL001_TEST002",
+                    "unit": "resource:org.moocon.core.ModuleUnit#PHIL001B",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Human rights and the postcolonial and decolonial critiques",
+                        "Human rights beyond western perspectives",
+                        "Human rights and the feminist critiques"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "PHIL001C",
+                "mod": "resource:org.moocon.core.CourseModule#PHIL001",
+                "unitTitle": "Minority Rights",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "PHIL001_TEST003",
+                    "unit": "resource:org.moocon.core.ModuleUnit#PHIL001C",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Sexual Orientation, gender identity and human rights",
+                        "Disability and human rights",
+                        "Human rights and seeking asylum"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            }
+        ]
+    }
+}

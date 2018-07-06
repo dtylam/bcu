@@ -1,0 +1,27 @@
+@startuml assessmentflow
+
+' title
+' Assessment Activities
+' end title
+
+(*) --> "<b>Teacher</b> creates 
+course module"
+-right-> "<b>Learner</b> adds 
+assessment submission"
+if "assessment type"
+-->[automatic] "<b>Blockchain</b> runs test"
+--> "<b>Blockchain</b> release results"
+else
+-->[assessor] "<b>Blockchain</b> enforces 
+marking criteria"
+--> "<b>Blockchain</b> release results"
+else
+-->[peer] "<b>Blockchain</b> 
+distributes to peers"
+--> "<b>Blockchain</b> release results"
+else
+-->[self] "<b>Blockchain</b> release results"
+
+--> (*)
+
+@enduml

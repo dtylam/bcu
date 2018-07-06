@@ -1,0 +1,43 @@
+@startuml
+skinparam activityBackgroundColor WhiteSmoke
+title
+Create Module Transaction
+end title
+
+note right
+    <b>Transaction Parameters:</b>
+    Learner learner
+    ModuleUnit unit
+    String content
+    String comments
+end note
+(*) -left-> "assign a\n teacher"
+' -right->[conflicts exist] (*1)
+if "unit.assessment is" then 
+-->[Assessor Assessment] "create the submission\n blockchain object"
+else
+-right->[Automatic Assessment] "send the test file and\n submission file to the\n automatic testing service"
+--> "add results and feedback \n to submission object"
+-left-> "create the submission\n blockchain object"
+
+"create the submission\n blockchain object" --> "add the new Submission\n to learner's list of submissions"
+    if "unit.assessment is" then 
+    -->[Assessor Assessment](*1)
+    note right
+        <b>Emit Event:</b>
+        SubmissionUploaded 
+        { Submission submission
+        String unitId
+        String teacherId (optional) }
+    end note
+    else 
+    -right->[Automatic Assessment] (*2)
+    note top
+        <b>Emit Event:</b>
+        ResultAvailable 
+        { Submission submission
+            String unitId  
+            String details }
+    end note
+
+@enduml

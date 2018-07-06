@@ -1,0 +1,225 @@
+{
+    "$class": "org.moocon.core.CreateModule",
+    "mod": {
+        "$class": "org.moocon.core.CourseModule",
+        "modId": "WEB001",
+        "teachers": [
+            "resource:org.moocon.core.Teacher#T01"
+        ],
+        "modTitle": "Introduction to JavaScript",
+        "cost": 10,
+        "prerequisites": [],
+        "corequisites": [],
+        "learningObjectives": [
+            "Using and selecting data structures such as arrays.",
+            "Using elementary programming constructs: conditions, loops."
+        ],
+        "units": [
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "WEB001A",
+                "mod": "resource:org.moocon.core.CourseModule#WEB001",
+                "unitTitle": "Data Structures",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "WEB001_TEST001",
+                    "unit": "resource:org.moocon.core.ModuleUnit#WEB001A",
+                    "terminal": false,
+                    "weighting": 10,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Primitive Data Types: What? When? How?",
+                        "Arrays: What? When? How?"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "WEB001B",
+                "mod": "resource:org.moocon.core.CourseModule#WEB001",
+                "unitTitle": "Conditionals and Loops",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AssessorAssessment",
+                    "assessId": "WEB001_TEST002",
+                    "unit": "resource:org.moocon.core.ModuleUnit#WEB001B",
+                    "terminal": false,
+                    "weighting": 40,
+                    "resultType": "GradeResult",
+                    "knowledgeRequired": [
+                        "Conditionals: What? When? How?",
+                        "Loops: What? When? How?"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Marking",                    
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "A",
+                            "descriptions": "a comprehensive and critical understanding of the topic;
+                            a high level of independent thinking and development of own ideas;
+                            an ability to develop a complex argument solution or evaluation;
+                            a highly critical evaluation of the relevant literature and theories, where appropriate;
+                            a high standard of competence in the appropriate use of methodologies for analysis;
+                            and synthesis;
+                            an excellent ability to communicate clearly and concisely;"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "B",
+                            "descriptions": "a critical understanding of the topic;
+                            independent thinking and development of own ideas;
+                            an ability to develop a well-structured argument, solution, evaluation or explanation;
+                            a critical evaluation of the relevant literature and theories, where appropriate;
+                            a high standard of competence in the use of appropriate methodologies for analysis
+                            and synthesis;
+                            an ability to communicate clearly and concisely;"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "C",
+                            "descriptions": "a good understanding of the topic;
+                            some evidence of independent thinking and development of own ideas;
+                            an ability to develop a structured argument, solution, evaluation or explanation;
+                            evaluation of the relevant literature and theories, where appropriate;
+                            competence in the use of appropriate methodologies for analysis and synthesis;
+                            an ability to communicate clearly and effectively;"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "D",
+                            "descriptions": "evidence of a coherent understanding of the key aspects of the topic;
+                            limited independent thinking and development of own ideas;
+                            the ability to present a sufficiently structured argument, solution, or explanation;
+                            evidence of some evaluation of the relevant literature and theories, where appropriate;
+                            use of the relevant methodologies for analysis and synthesis to an acceptable standard;
+                            evidence of effective communication skills;"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "E",
+                            "descriptions": "evidence of some understanding of key aspects of the topic;
+                            no evidence of independent thinking and development of own ideas;
+                            some ability to present an appropriate argument, solution or explanation;
+                            limited evaluation of the relevant literature and theories;
+                            limited use of relevant methodologies;
+                            little evidence of effective communication;"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "F",
+                            "descriptions": "Unacceptable work that fails to demonstrate relevant knowledge, understanding or skills
+                            to any significant degree and/or clearly fails to meet key learning outcomes in the
+                            assessed task;"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Functionality Correctness",
+                            "details": "How accurately does the implementation fulfil the task requirements",
+                            "weighting": 30
+                        },
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Design of Control Flows",
+                            "details": "How well does the implementation employ if/ else conditions and while/ for loops",
+                            "weighting": 50
+                        },
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Readability and good coding practices",
+                            "details": "How well does the implementation use identations and classes",
+                            "weighting": 20
+                        }
+                    ],
+                    "passingStandard": 3
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "WEB001C",
+                "mod": "resource:org.moocon.core.CourseModule#WEB001",
+                "unitTitle": "Viva",
+                "materialMd": "",
+                "assessment": {
+                    "$class": "org.moocon.core.AssessorAssessment",
+                    "assessId": "WEB001_TEST003",
+                    "unit": "resource:org.moocon.core.ModuleUnit#WEB001C",
+                    "terminal": true,
+                    "weighting": 60,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Understanding of previously authored code"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Viva",                    
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The assessor has deemed your understanding of the topic to be sufficient"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The assessor has deemed your understanding of the topic to be insufficient"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Primitive Data Structures",
+                            "details": "Understanding of eg. integer, double, string, etc.",
+                            "weighting": 25
+                        },
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Data Structures",
+                            "details": "Understanding of eg. arrays, enum, etc.",
+                            "weighting": 25
+                        },
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Conditionals",
+                            "details": "Understanding of eg. if, else-if, else.",
+                            "weighting": 25
+                        },
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Loops",
+                            "details": "Understanding of for, for... in, while, etc.",
+                            "weighting": 25
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            }
+        ]
+    }
+}

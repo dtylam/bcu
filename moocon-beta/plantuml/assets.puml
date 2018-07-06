@@ -1,0 +1,125 @@
+@startuml assets
+'** Auto generated content, any changes may be lost **'
+!define DATE %date[EEE, MMM d, ''yy 'at' HH:mm]%
+skinparam titleBackgroundColor LightYellow
+skinparam titleBorderThickness 0.5
+skinparam titleBorderRoundCorner 6
+skinparam titleFontColor Black
+skinparam titleFontSize 18
+' skinparam backgroundColor #EEEBDC
+' skinparam handwritten true
+skinparam classBackgroundColor WhiteSmoke
+' title
+' Asset Definitions
+' end title
+
+package hyperledger.composer.system.Asset{
+
+    class ModuleUnit << (A,YellowGreen) >> {
+        + String unitId
+        + CourseModule mod
+        + String unitTitle
+        + String materialMd
+        + Assessment assessment
+    }
+    ModuleUnit "1..N" *-- CourseModule : contains <
+
+    class CourseModule << (A,YellowGreen) >> {
+        + String modId
+        + Teacher[] teachers
+        + CourseModule[] prerequisites
+        + CourseModule[] corequisites
+        + String modTitle
+        + Double cost
+        + String[] learningObjectives
+        + ModuleUnit[] units
+    }
+    ' CourseModule o-- "many" Teacher
+    ' CourseModule o-- "many" CourseModule
+    CourseModule "1..N" o-- Curriculum : contains <
+
+    class Curriculum << (A,YellowGreen) >> {
+        + String currId
+        + Teacher teacher
+        + Learner learner
+        + CourseModule[] mods
+        + String curTitle
+        + String notes
+        + String programmeOutcome
+        + Boolean approved
+    }
+    ' Curriculum o-- Teacher
+    ' Curriculum o-- Learner
+
+    class Assessment<abstract> << (A,YellowGreen) >> {
+        + String assessId
+        + ModuleUnit unit
+        + Boolean terminal
+        + Integer weighting
+        + String resultType
+        + String[] knowledgeRequired
+        + GradeDescriptor[] gradeDescriptors
+        + MarkingCriterion[] criteria
+        + Integer passingStandard        
+        + String detailsMd
+    }
+    Assessment "0..1" *-- ModuleUnit : contains <
+
+    class AutoAssessment << (A,YellowGreen) >> {
+        + String testType
+        + String testFile
+        ' + GradeDescriptor[] gradeDescriptors
+        ' + MarkingCriterion[] criteria
+        ' + Integer passingStandard
+    }
+    AutoAssessment --|> Assessment
+    class AssessorAssessment << (A,YellowGreen) >> {
+        + String testType
+    }
+    AssessorAssessment --|> Assessment
+
+    class Submission << (A,YellowGreen) >> {
+        + String subId
+        + Learner learner
+        + Teacher teacherAssigned
+        + ModuleUnit unit
+        + String content
+        + String comments
+        + DateTime timeAdded
+        + DateTime timeAssessed
+        + AssessmentResult result
+    }
+    ' Submission "many" o-- Learner
+    Submission o-- "1" ModuleUnit : > related to
+
+    ' class AutoAssessRequest << (A,YellowGreen) >> {
+        '    + String reqId
+        '    + Submission submission
+        '    + String content
+        '    + String testFile
+        '    + String response
+        '
+    ' }
+    ' AutoAssessRequest o-- Submission
+
+    class Certificate << (A,YellowGreen) >> {
+        + String certId
+        + Learner learner
+        + Teacher teacher
+        + CourseModule[] mods
+        + Submission[] subs
+        + Curriculum curriculum
+        + AssessmentResult overallResult
+        + String fineprintMd
+    }
+    ' Certificate o-- Learner
+    ' Certificate o-- Teacher
+    Certificate o-- "1..N" CourseModule : related to >
+
+}
+
+' package hyperledger.composer.system.Participant{
+    ' class Learner << (P,lightblue) >>
+    ' class Teacher << (P,lightblue) >>
+    '
+@enduml

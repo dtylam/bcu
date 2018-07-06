@@ -1,0 +1,150 @@
+{
+    "$class": "org.moocon.core.CreateModule",
+    "mod": {
+        "$class": "org.moocon.core.CourseModule",
+        "modId": "MED001",
+        "teachers": [
+            "resource:org.moocon.core.Teacher#T03"
+        ],
+        "modTitle": "Epidemics",
+        "cost": 10,
+        "prerequisites": [],
+        "corequisites": [],
+        "learningObjectives": [
+            "Demonstrate knowledge of the origins, spread and control of infectious disease epidemics.",
+            "Demonstrate understanding of the importance of effective communication about epidemics.",
+            "Demonstrate understanding of key contemporary issues relating to epidemics from a global perspective."            
+        ],
+        "units": [
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "MED001A",
+                "mod": "resource:org.moocon.core.CourseModule#MED001",
+                "unitTitle": "Origins of Novel Pathogens",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "MED001_TEST001",
+                    "unit": "resource:org.moocon.core.ModuleUnit#MED001A",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Molecules to populations and species",
+                        "How genetics is studied through experiments on model organisms"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "MED001B",
+                "mod": "resource:org.moocon.core.CourseModule#MED001",
+                "unitTitle": "Spread of Infectious Diseases",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "MED001_TEST002",
+                    "unit": "resource:org.moocon.core.ModuleUnit#MED001B",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Molecules to populations and species",
+                        "How genetics is studied through experiments on model organisms"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "MED001C",
+                "mod": "resource:org.moocon.core.CourseModule#MED001",
+                "unitTitle": "Medical and Public Health Countermeasures",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "MED001_TEST003",
+                    "unit": "resource:org.moocon.core.ModuleUnit#MED001C",
+                    "terminal": false,
+                    "weighting": 33,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Molecules to populations and species",
+                        "How genetics is studied through experiments on model organisms"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            }
+        ]
+    }
+}

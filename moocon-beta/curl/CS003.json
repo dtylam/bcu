@@ -1,0 +1,107 @@
+{
+    "$class": "org.moocon.core.CreateModule",
+    "mod": {
+        "$class": "org.moocon.core.CourseModule",
+        "modId": "CS003",
+        "teachers": [
+            "resource:org.moocon.core.Teacher#T02"
+        ],
+        "modTitle": "Introduction to Android Applications",
+        "cost": 20,
+        "prerequisites": [],
+        "corequisites": [],
+        "learningObjectives": [
+            "Develop a simple app using basic Java and Android features.",
+            "Understand and utilise inheritance and polymorphism features."
+        ],
+        "units": [
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "CS003A",
+                "mod": "resource:org.moocon.core.CourseModule#CS003",
+                "unitTitle": "Introduction to Android Studio",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "CS003_TEST001",
+                    "unit": "resource:org.moocon.core.ModuleUnit#CS003A",
+                    "terminal": false,
+                    "weighting": 50,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "How to write a simple Android app",
+                        "Java primitive Java data types",
+                        "Output to the Android display views"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            },
+            {
+                "$class": "org.moocon.core.ModuleUnit",
+                "unitId": "CS003B",
+                "mod": "resource:org.moocon.core.CourseModule#CS003",
+                "unitTitle": "Inheritance and Polymorphism",
+                "materialMd": "https://www.youtube.com/watch?v=Ukg_U3CnJWI",
+                "assessment": {
+                    "$class": "org.moocon.core.AutoAssessment",
+                    "assessId": "CS003_TEST002",
+                    "unit": "resource:org.moocon.core.ModuleUnit#CS003B",
+                    "terminal": false,
+                    "weighting": 50,
+                    "resultType": "PassFailResult",
+                    "knowledgeRequired": [
+                        "Inheritance: What? When? How?",
+                        "Polymorphism: What? When? How?"
+                    ],
+                    "detailsMd": "Details",
+                    "testType": "Equivalence",
+                    "testFile": "data:text/plain;base64,SGVsbG8gV29ybGQhCg==",
+                    "gradeDescriptors": [
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "PASS",
+                            "descriptions": "The test file is the same as your submission"
+                        },
+                        {
+                            "$class": "org.moocon.core.GradeDescriptor",
+                            "grade": "FAIL",
+                            "descriptions": "The test file is not the same as your submission"
+                        }
+                    ],
+                    "criteria": [
+                        {
+                            "$class": "org.moocon.core.MarkingCriterion",
+                            "heading": "Equivalence",
+                            "details": "How alike is the test file compared with your submission",
+                            "weighting": 100
+                        }
+                    ],
+                    "passingStandard": 0
+                }
+            }
+        ]
+    }
+}
