@@ -1,6 +1,6 @@
 composer-logs/
 node_modules/
-out/
+*.eps
 
 # Created by https://www.gitignore.io/api/hyperledgercomposer
 

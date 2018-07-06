@@ -24,6 +24,8 @@ cd {to your-clone-directory}
 `Teacher`
 `Reader`
 
+![class diagram of participants](out/plantuml/participants/participants.png)
+
 **Assets**
 `Curriculum`
 `CourseModule`
@@ -31,6 +33,8 @@ cd {to your-clone-directory}
 `Assessment`
 `Submission`
 `Certificate`
+
+See bottom for class diagram of assets.
 
 **Transactions**
 `CreateModule`
@@ -63,3 +67,5 @@ composer network update -c admin@moocon-beta -a moocon-beta@0.1.3.bna
 # debug events emitted on websockets
 wscat -c localhost:3000
 ```
+
+![class diagram of assets](out/plantuml/assets/assets.png)
