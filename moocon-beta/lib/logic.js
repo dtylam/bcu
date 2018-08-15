@@ -1,8 +1,8 @@
 'use strict';
 
 /**
- * Creating a Course
- * @param {org.moocon.core.CreateModule} ncmtx - the Submission being assessed
+ * Tx0 Creating a Course
+ * @param {org.moocon.core.CreateModule} ncmtx - transaction object ncmtx
  * @transaction
  */
 function createModule(ncmtx) {
@@ -40,9 +40,134 @@ function createModule(ncmtx) {
         })
 }
 
+/* 
+ * The Curriculum Personalisation Smart Contract:
+ * 
+ * Tx1 ProposeCurriculum: ordered by either a learner or a teacher to propose a new curriculum, 
+ * or to proposed edits to an existing curriculum on the blockchain.
+ * 
+ * Tx2 ApproveCurriculum: ordered by a teacher to accept a proposed curriculum and 
+ * it automatically enrols the learner to the courses and updates relevant records.
+ */
+
 /**
- * Creating new Submission function
- * @param {org.moocon.core.AddSubmission} nsubtx - new Submission
+ * Tx1 ProposeCurriculum
+ * @param {org.moocon.core.ProposeCurriculum} pctx - transaction object pctx
+ * @transaction
+ */
+function proposeCurriculum(pctx) {
+    var NS = 'org.moocon.core';
+    var factory = getFactory();
+    var date = new Date();
+    if (pctx.hasOwnProperty("existingCurrId")) {
+        throw new Error('updating curriculum not implemented');
+    }
+    else {
+        var curriculum = factory.newResource(NS, 'Curriculum',
+            pctx.learner.uId + "_" + date.getFullYear() + date.getMonth());
+        curriculum.teacher = pctx.teacher;
+        curriculum.learner = pctx.learner;
+        curriculum.modIds = pctx.modIds;
+        return getAssetRegistry(NS + '.Curriculum')
+            .then(function (curriculumRegistry) {
+                return curriculumRegistry.add(curriculum).then(function () {
+                    // Emit an event for the modified learner.
+                    var event = getFactory().newEvent(NS, 'CurriculumProposed');
+                    event.curriculum = curriculum;
+                    emit(event);
+                });
+            })
+    }
+}
+
+/**
+ * Tx2 ApproveCurriculum
+ * @param {org.moocon.core.ApproveCurriculum} actx - transaction object actx
+ * @transaction
+ */
+function approveCurriculum(actx) {
+    var NS = 'org.moocon.core';
+    var factory = getFactory();
+    actx.curriculum.approved = true;
+    var learner = actx.curriculum.learner;
+
+    return getAssetRegistry(NS + '.Curriculum')
+        .then(function (curriculumRegistry) {
+            return curriculumRegistry.update(actx.curriculum).then(function () {
+                // Emit an event for the modified learner.
+                var event = getFactory().newEvent(NS, 'CurriculumApproved');
+                event.curriculum = actx.curriculum;
+                emit(event);
+            }).then(function () {
+                var currCost = 0;
+                var oldBalance = learner.balance;
+                var currMods = [];
+                return getAssetRegistry(NS + '.CourseModule').then(
+                    function (modRegistry) {
+                        var promises = []
+                        for (var i = 0; i < actx.curriculum.modIds.length; i++) {
+                            var modId = actx.curriculum.modIds[i];
+                            var mod = modRegistry.get(modId);
+                            promises.push(mod);
+                        }
+                        Promise.all(promises).then(function (mods) {
+                            currMods = mods;
+                            for (var i = 0; i < currMods.length; i++) {
+                                // check if user has already purchased the module
+                                if (learner.mods.includes(currMods[i])) {
+                                    throw new Error('Student has already started one of the modules.');
+                                }
+                                currCost = currCost + currMods[i].cost;
+                            }
+                            //check if can afford
+                            if (oldBalance < currCost) {
+                                throw new Error('Your credit balance is not enough for the module!');
+                            }
+                            // Update the balance of the learner.
+                            learner.balance = oldBalance - currCost;
+                            //add it to learner's ongoing modules list
+                            for (var i = 0; i < currMods.length; i++) {
+                                var mod = currMods[i];
+                                learner.mods.push(mod);
+                            }
+                            // throw new Error("mods length is " + learner.mods.length)
+                            // Get the participant registry for the learner.
+                            return getParticipantRegistry(NS + '.Learner')
+                                .then(function (learnerRegistry) {
+                                    // Update the participant in the participant registry.
+                                    return learnerRegistry.update(learner);
+                                })
+                                .then(function () {
+                                    // Emit an event for the modified learner.
+                                    var event = getFactory().newEvent(NS, 'BalanceChanges');
+                                    event.user = learner;
+                                    event.oldBalance = oldBalance;
+                                    event.newBalance = learner.balance;
+                                    event.details = actx.curriculum.currId;
+                                    emit(event);
+                                });
+                        })
+
+                        // throw new Error("currMods length is " + currMods.length)
+                    })
+            })
+        });
+}
+
+
+/* 
+ * The Assessment Smart Contract:
+ * 
+ * Tx3 AddSubmission: ordered by a learner to store a submission (assessment attempt) on the blockchain, 
+ * this could return the result of the assessment immediately if marked by an automated marking service.
+ * 
+ * Tx4 SubmitResult: ordered by the teacher of the course to update the assessment result 
+ * of a submission on the blockchain for manually marked assessments
+ */
+
+/**
+ * Tx3 AddSubmission
+ * @param {org.moocon.core.AddSubmission} nsubtx - transaction object nsubtx
  * @transaction
  */
 function addSubmission(nsubtx) {
@@ -145,8 +270,8 @@ function addSubmission(nsubtx) {
 }
 
 /**
- * Proposing a Curriculum
- * @param {org.moocon.core.SubmitResult} srtx - the transaction obj
+ * Tx4 SubmitResult
+ * @param {org.moocon.core.SubmitResult} srtx - transaction object srtx
  * @transaction
  */
 function submitResult(srtx) {
@@ -229,113 +354,10 @@ function submitResult(srtx) {
         });
 }
 
-/**
- * Proposing a Curriculum
- * @param {org.moocon.core.ProposeCurriculum} pctx - the transaction obj
- * @transaction
- */
-function proposeCurriculum(pctx) {
-    var NS = 'org.moocon.core';
-    var factory = getFactory();
-    var date = new Date();
-    if (pctx.hasOwnProperty("existingCurrId")) {
-        throw new Error('updating curriculum not implemented');
-    }
-    else {
-        var curriculum = factory.newResource(NS, 'Curriculum',
-            pctx.learner.uId + "_" + date.getFullYear() + date.getMonth());
-        curriculum.teacher = pctx.teacher;
-        curriculum.learner = pctx.learner;
-        curriculum.modIds = pctx.modIds;
-        return getAssetRegistry(NS + '.Curriculum')
-            .then(function (curriculumRegistry) {
-                return curriculumRegistry.add(curriculum).then(function () {
-                    // Emit an event for the modified learner.
-                    var event = getFactory().newEvent(NS, 'CurriculumProposed');
-                    event.curriculum = curriculum;
-                    emit(event);
-                });
-            })
-    }
-}
 
 /**
- * Approving a Curriculum
- * @param {org.moocon.core.ApproveCurriculum} actx - the Submission being assessed
- * @transaction
- */
-function approveCurriculum(actx) {
-    var NS = 'org.moocon.core';
-    var factory = getFactory();
-    actx.curriculum.approved = true;
-    var learner = actx.curriculum.learner;
-
-    return getAssetRegistry(NS + '.Curriculum')
-        .then(function (curriculumRegistry) {
-            return curriculumRegistry.update(actx.curriculum).then(function () {
-                // Emit an event for the modified learner.
-                var event = getFactory().newEvent(NS, 'CurriculumApproved');
-                event.curriculum = actx.curriculum;
-                emit(event);
-            }).then(function () {
-                var currCost = 0;
-                var oldBalance = learner.balance;
-                var currMods = [];
-                return getAssetRegistry(NS + '.CourseModule').then(
-                    function (modRegistry) {
-                        var promises = []
-                        for (var i = 0; i < actx.curriculum.modIds.length; i++) {
-                            var modId = actx.curriculum.modIds[i];
-                            var mod = modRegistry.get(modId);
-                            promises.push(mod);
-                        }
-                        Promise.all(promises).then(function (mods) {
-                            currMods = mods;
-                            for (var i = 0; i < currMods.length; i++) {
-                                // check if user has already purchased the module
-                                if (learner.mods.includes(currMods[i])) {
-                                    throw new Error('Student has already started one of the modules.');
-                                }
-                                currCost = currCost + currMods[i].cost;
-                            }
-                            //check if can afford
-                            if (oldBalance < currCost) {
-                                throw new Error('Your credit balance is not enough for the module!');
-                            }
-                            // Update the balance of the learner.
-                            learner.balance = oldBalance - currCost;
-                            //add it to learner's ongoing modules list
-                            for (var i = 0; i < currMods.length; i++) {
-                                var mod = currMods[i];
-                                learner.mods.push(mod);
-                            }
-                            // throw new Error("mods length is " + learner.mods.length)
-                            // Get the participant registry for the learner.
-                            return getParticipantRegistry(NS + '.Learner')
-                                .then(function (learnerRegistry) {
-                                    // Update the participant in the participant registry.
-                                    return learnerRegistry.update(learner);
-                                })
-                                .then(function () {
-                                    // Emit an event for the modified learner.
-                                    var event = getFactory().newEvent(NS, 'BalanceChanges');
-                                    event.user = learner;
-                                    event.oldBalance = oldBalance;
-                                    event.newBalance = learner.balance;
-                                    event.details = actx.curriculum.currId;
-                                    emit(event);
-                                });
-                        })
-
-                        // throw new Error("currMods length is " + currMods.length)
-                    })
-            })
-        });
-}
-
-/**
- * Creating a new Certificate
- * @param {org.moocon.core.GenCertificate} gctx - the Submission being assessed
+ * Tx5 Creating a new Certificate
+ * @param {org.moocon.core.GenCertificate} gctx - transaction object gctx
  * @transaction
  */
 function genCertificate(gctx) {
@@ -442,8 +464,8 @@ function beginModule(bmtx) {
 }
 
 /**
- * Assessing an existing Submission
- * @param {org.moocon.core.AutoAssess} transaction - the Submission being assessed
+ * Auto assessing an existing Submission
+ * @param {org.moocon.core.AutoAssess} transaction
  * @transaction
  */
 function autoassess(transaction) {
