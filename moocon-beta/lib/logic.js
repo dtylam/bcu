@@ -374,7 +374,7 @@ function signCertificate(sctx) {
             lastSubmission.learner.uId + "_" + thisMod.modId +
             + date.getFullYear() + date.getMonth());
         cert.learner = lastSubmission.learner;
-        cert.teacher = sctx.orderer;
+        cert.teacher = sctx.signer;
         cert.mods = [factory.newRelationship(
             NS, 'CourseModule', thisMod.modId)]
         // asset that no further pass checking is required

@@ -156,9 +156,9 @@ class org.moocon.core.CourseModuleCompleted {
 }
 org.moocon.core.CourseModuleCompleted --|> org.hyperledger.composer.system.Event
 class org.moocon.core.SignCertificate << (T,yellow) >> {
-   + Submission[] subs
+'    + Submission[] subs
    + Curriculum curriculum
-   + Teacher orderer
+   + Teacher signer
 }
 org.moocon.core.SignCertificate --|> org.hyperledger.composer.system.Transaction
 class org.moocon.core.Certificate << (A,green) >> {

@@ -6,13 +6,16 @@
  */
 namespace org.moocon.core
 
-//Participants
+/**
+ * Participants
+ */
 
 abstract participant User identified by uId {
   o String uId
   o String firstName
   o String lastName
   o String nid
+  o String organisation optional
 }
 
 participant Learner extends User {
@@ -26,14 +29,14 @@ participant Learner extends User {
 
 participant Teacher extends User {
   --> CourseModule[] mods  
-  o String organisation
 }
 
 participant Reader extends User {
-  o String organisation optional
 }
 
-// Use Case
+/**
+ * Assets
+ */
 
 transaction CreateModule {
   o CourseModule mod
@@ -66,15 +69,19 @@ abstract asset Assessment identified by assessId{
   o Integer weighting  
   o String resultType
   o String[] knowledgeRequired
+  o GradeDescriptor[] gradeDescriptors
+  o MarkingCriterion[] criteria
+  o Integer passingStandard  // position of grade array / score
   o String detailsMd
 }
 
+asset AutoAssessment extends Assessment{
+  o String testType
+  o String testFile
+}
 
-transaction AddSubmission {
-  --> Learner learner
-  --> ModuleUnit unit
-  o String content
-  o String comments
+asset AssessorAssessment extends Assessment{
+  o String testType 
 }
 
 asset Submission identified by subId {
@@ -89,33 +96,43 @@ asset Submission identified by subId {
   o AssessmentResult result optional
 }
 
+asset Curriculum identified by currId{
+  o String currId
+  --> Teacher teacher
+  --> Learner learner
+  --> Certificate cert optional
+  o String[] modIds
+  o String currTitle optional
+  o String notes optional
+  o String programmeOutcome optional
+  o Boolean approved default = false
+}
+
+asset Certificate identified by certId {
+  o String certId
+  --> Learner learner
+  --> Teacher[] signatories
+  --> Submission[] subs
+  --> Curriculum curriculum optional
+  o AssessmentResult overallResult optional
+  o String detailsMd
+}
+
+/**
+ * Assessment Use Case
+ */
+
+transaction AddSubmission {
+  --> Learner learner
+  --> ModuleUnit unit
+  o String content
+  o String comments
+}
+
 event SubmissionUploaded {
   --> Submission submission
   o String unitId
   o String teacherId optional
-}
-
-asset AutoAssessment extends Assessment{
-  o String testType
-  o String testFile
-  o GradeDescriptor[] gradeDescriptors
-  o MarkingCriterion[] criteria  
-  o Integer passingStandard  
-}
-
-// asset AutoAssessRequest identified by reqId {
-//   o String reqId
-//   --> Submission submission
-//   o String content
-//   o String testFile
-//   o String response optional
-// }
-
-asset AssessorAssessment extends Assessment{
-  o String testType  
-  o GradeDescriptor[] gradeDescriptors
-  o MarkingCriterion[] criteria
-  o Integer passingStandard  // position of grade array / score
 }
 
 transaction SubmitResult {
@@ -125,27 +142,6 @@ transaction SubmitResult {
   o String feedbackMd
   // o AssessmentResult result
 }
-
-// asset PeerAssessment extends Assessment{
-//   o GradeDescriptor[] gradeDescriptors
-//   o MarkingCriterion[] criteria
-//   o Integer passingStandard  
-// }
-
-// event PeerFeedbackRequest {
-//   --> Submission submission
-//   --> Learner peerAssessor
-// }
-
-// transaction SubmitPeerFeedback {
-//   --> Submission submission
-//   --> Learner peerAssessor  
-//   o String gradesMd
-//   o String comments
-// }
-
-// asset SelfAssessment extends Assessment{
-// }
 
 event ResultAvailable {
   --> Submission submission
@@ -159,19 +155,37 @@ event CourseModuleCompleted {
   o String modId
 }
 
-transaction SignCertificate {
-  --> Certificate cert
-  --> Teacher orderer
+/*
+ * Curriculum Personalisation Use Case
+ */
+
+transaction ProposeCurriculum {
+  --> Learner learner
+  --> Teacher teacher
+  o String existingCurrId optional
+  o String[] modIds
 }
 
-asset Certificate identified by certId {
-  o String certId
-  --> Learner learner
-  --> Teacher[] signatories
-  --> Submission[] subs
-  --> Curriculum curriculum optional
-  o AssessmentResult overallResult optional
-  o String fineprintMd
+event CurriculumProposed {
+  --> Curriculum curriculum
+}
+
+transaction ApproveCurriculum {
+  o Curriculum curriculum
+  o Certificate[] certs
+}
+
+event CurriculumApproved {
+  --> Curriculum curriculum
+}
+
+/*
+ * Certificate Awarding Use Case
+ */
+
+transaction SignCertificate {
+  --> Certificate cert
+  --> Teacher signer
 }
 
 event NewCertificate {
@@ -179,7 +193,9 @@ event NewCertificate {
   --> Certificate cert
 }
 
-// concepts
+/**
+ * Concepts: enum/ objects that are not assets or participants 
+ */
 
 abstract concept AssessmentResult {
   o Boolean passed
@@ -211,41 +227,50 @@ concept MarkingCriterion {
   o Integer weighting
 }
 
-// Curriculum Personalisation Use Case
+/* 
+* planned transactions, not implemented
+*/ 
 
-asset Curriculum identified by currId{
-  o String currId
-  --> Teacher teacher
-  --> Learner learner
-  --> Certificate cert optional
-  o String[] modIds
-  o String currTitle optional
-  o String notes optional
-  o String programmeOutcome optional
-  o Boolean approved default = false
+transaction EditModule {
+  o CourseModule mod
 }
 
-transaction ProposeCurriculum {
-  --> Learner learner
-  --> Teacher teacher
-  o String existingCurrId optional
-  o String[] modIds
+transaction EditUnit {
+  o ModuleUnit unit
 }
 
-event CurriculumProposed {
-  --> Curriculum curriculum
+transaction EditAssessment {
+  o Assessment assessment
 }
 
-transaction ApproveCurriculum {
-  o Curriculum curriculum
-  o Certificate[] certs
-}
+// /*
+// *  Future Work: Peer and Self Assessments
+// */
 
-event CurriculumApproved {
-  --> Curriculum curriculum
-}
+// asset PeerAssessment extends Assessment{
+//   o GradeDescriptor[] gradeDescriptors
+//   o MarkingCriterion[] criteria
+//   o Integer passingStandard  
+// }
 
-// legacy transactions/ events from alpha
+// event PeerFeedbackRequest {
+//   --> Submission submission
+//   --> Learner peerAssessor
+// }
+
+// transaction SubmitPeerFeedback {
+//   --> Submission submission
+//   --> Learner peerAssessor  
+//   o String gradesMd
+//   o String comments
+// }
+
+// asset SelfAssessment extends Assessment{
+// }
+
+// /* 
+// * legacy transactions/ events from alpha
+// */ 
 
 // event BalanceChanges {
 //   --> User user
@@ -263,20 +288,13 @@ event CurriculumApproved {
 //   --> Submission submission
 // }
 
-// planned transactions, not implemented
-
-transaction EditModule {
-  o CourseModule mod
-}
-
-transaction EditUnit {
-  o ModuleUnit unit
-}
-
-transaction EditAssessment {
-  o Assessment assessment
-}
-
+// asset AutoAssessRequest identified by reqId {
+//   o String reqId
+//   --> Submission submission
+//   o String content
+//   o String testFile
+//   o String response optional
+// }
 
 
 
