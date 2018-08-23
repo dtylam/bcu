@@ -356,32 +356,32 @@ function submitResult(srtx) {
 
 
 /**
- * Tx5 Creating a new Certificate
- * @param {org.moocon.core.GenCertificate} gctx - transaction object gctx
+ * Tx5 Signing a completed Certificate
+ * @param {org.moocon.core.SignCertificate} sctx - transaction object sctx
  * @transaction
  */
-function genCertificate(gctx) {
+function signCertificate(sctx) {
     var NS = 'org.moocon.core';
     var factory = getFactory();
-    if (gctx.hasOwnProperty('curriculum')) {
+    if (sctx.hasOwnProperty('curriculum')) {
         throw new Error("curriculum certificate not implemented")
     }
     else {
-        var lastSubmission = gctx.subs[gctx.subs.length - 1]
+        var lastSubmission = sctx.subs[sctx.subs.length - 1]
         // asset only one mod is involved!
         var thisMod = lastSubmission.unit.mod;
         var cert = factory.newResource(NS, 'Certificate',
             lastSubmission.learner.uId + "_" + thisMod.modId +
             + date.getFullYear() + date.getMonth());
         cert.learner = lastSubmission.learner;
-        cert.teacher = gctx.orderer;
+        cert.teacher = sctx.orderer;
         cert.mods = [factory.newRelationship(
             NS, 'CourseModule', thisMod.modId)]
         // asset that no further pass checking is required
-        cert.subs = gctx.subs;
-        cert.fineprintMd = "Blockchain University is not a real university. This is not a real course. All names and characters are fictional. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam turpis, consectetur.";
+        cert.subs = sctx.subs;
+        cert.fineprintMd = "Blockchain University is not a real university. These course are not real taught courses. All names and characters are fictional. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam turpis, consectetur.";
 
-        // var passedSubs = gctx.subs.filter(sub => sub.result.passed);
+        // var passedSubs = sctx.subs.filter(sub => sub.result.passed);
         // var highestSubs = {};
         // thisMod.units.forEach(function (unit) {
         //     passedSubs.forEach(
@@ -461,51 +461,4 @@ function beginModule(bmtx) {
             event.details = modId;
             emit(event);
         });
-}
-
-/**
- * Auto assessing an existing Submission
- * @param {org.moocon.core.AutoAssess} transaction
- * @transaction
- */
-function autoassess(transaction) {
-    var NS = 'org.moocon.core';
-    var factory = getFactory();
-
-    //create new AutoAssessRequest asset
-    var request = factory.newResource(
-        NS, 'AutoAssessRequest', transaction.submission.subId);
-    request.submission = factory.newRelationship(
-        NS, 'Submission', transaction.submission.subId);
-    request.content = transaction.submission.content;
-    request.testFile = transaction.submission.unit.assessment.testFile;
-
-    //post(url,data)
-    var url = "https://moocon-js-marking.herokuapp.com/equivalence/";
-    return post(url, request).then(function (resp) {
-        console.log('@debug assess ext resp ', JSON.stringify(resp));
-        request.response = resp.body;
-        getAssetRegistry(NS + '.AutoAssessRequest')
-            .then(function (reqRegistry) {
-                return reqRegistry.add(request);
-            });
-        //update result of submission record    
-        var result = factory.newConcept(NS, 'PassFailResult');
-        result.passed = request.response;
-        transaction.submission.result = result;
-
-        return getAssetRegistry(NS + '.Submission')
-            .then(function (submissionRegistry) {
-                return submissionRegistry.update(transaction.submission);
-            }).then(function () {
-                // Emit an ResultAvailable event.
-                var event = getFactory().newEvent(NS, 'ResultAvailable');
-                event.submission = transaction.submission;
-                event.details = transaction.submission.unit.unitId;
-                event.details = result.passed.toString();
-                emit(event);
-
-            });
-    });
-
 }

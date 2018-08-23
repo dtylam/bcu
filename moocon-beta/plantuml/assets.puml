@@ -43,7 +43,7 @@ package hyperledger.composer.system.Asset{
         + Teacher teacher
         + Learner learner
         + CourseModule[] mods
-        + String curTitle
+        + String currTitle
         + String notes
         + String programmeOutcome
         + Boolean approved

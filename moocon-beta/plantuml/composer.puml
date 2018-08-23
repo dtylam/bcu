@@ -155,12 +155,12 @@ class org.moocon.core.CourseModuleCompleted {
    + String modId
 }
 org.moocon.core.CourseModuleCompleted --|> org.hyperledger.composer.system.Event
-class org.moocon.core.GenCertificate << (T,yellow) >> {
+class org.moocon.core.SignCertificate << (T,yellow) >> {
    + Submission[] subs
    + Curriculum curriculum
    + Teacher orderer
 }
-org.moocon.core.GenCertificate --|> org.hyperledger.composer.system.Transaction
+org.moocon.core.SignCertificate --|> org.hyperledger.composer.system.Transaction
 class org.moocon.core.Certificate << (A,green) >> {
    + String certId
    + Learner learner

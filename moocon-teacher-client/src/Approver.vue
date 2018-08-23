@@ -21,7 +21,7 @@
                 <md-table-row v-for="curr in curricula" :key="curr.currId">
                     <md-table-cell>{{ curr.currId }}</md-table-cell>
                     <md-table-cell>
-                        <div v-if="curr.hasOwnProperty('curTitle')">{{ curr.curTitle }}</div>
+                        <div v-if="curr.hasOwnProperty('currTitle')">{{ curr.currTitle }}</div>
                         <div v-else>undefined</div>
                     </md-table-cell>
                     <md-table-cell><a>{{ curr.learner.split("#")[1] }}</a></md-table-cell>
@@ -53,8 +53,8 @@
                     <div class="md-subheading">Details</div>
                     <div style="max-height: 320px; overflow: scroll;">
                         <md-field>
-                            <!-- <label for="curTitle">{{editingCurr.curTitle}}</label> -->
-                            <md-input name="curTitle" id="curTitle" v-model="editingCurr.curTitle"/>
+                            <!-- <label for="currTitle">{{editingCurr.currTitle}}</label> -->
+                            <md-input name="currTitle" id="currTitle" v-model="editingCurr.currTitle"/>
                             <span class="md-helper-text">Curriculum Title</span>
                         </md-field>
                         <md-field>
@@ -122,7 +122,7 @@ export default {
       // currTeachers: {},
       editingCurr: {
         currId: null,
-        curTitle: null,
+        currTitle: null,
         notes: null,
         programmeOutcome: null,
         modIds: []

@@ -206,7 +206,7 @@ rule Teacher_Learner_Update_Cert {
     participant: "org.moocon.core.Teacher"
     operation: UPDATE
     resource: "org.moocon.core.Learner"
-    transaction: "org.moocon.core.GenCertificate"    
+    transaction: "org.moocon.core.SignCertificate"    
     action: ALLOW
 }
 
