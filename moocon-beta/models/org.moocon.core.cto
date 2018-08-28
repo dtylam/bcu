@@ -47,7 +47,6 @@ asset CourseModule identified by modId{
   --> Teacher[] teachers
   --> CourseModule[] prerequisites
   --> CourseModule[] corequisites
-  --> Certificate cert optional
   o String modTitle
   o Double cost
   o String[] learningObjectives
@@ -100,7 +99,7 @@ asset Curriculum identified by currId{
   o String currId
   --> Teacher teacher
   --> Learner learner
-  --> Certificate cert optional
+  --> Certificate[] cert optional
   o String[] modIds
   o String currTitle optional
   o String notes optional
@@ -112,10 +111,11 @@ asset Certificate identified by certId {
   o String certId
   --> Learner learner
   --> Teacher[] signatories
-  --> Submission[] subs
+  --> Submission[] subs 
   --> Curriculum curriculum optional
   o AssessmentResult overallResult optional
   o String detailsMd
+  o Boolean visible default = false
 }
 
 /**
@@ -172,7 +172,7 @@ event CurriculumProposed {
 
 transaction ApproveCurriculum {
   o Curriculum curriculum
-  o Certificate[] certs
+  o Boolean[] hasCert
 }
 
 event CurriculumApproved {
@@ -189,7 +189,6 @@ transaction SignCertificate {
 }
 
 event NewCertificate {
-  --> CourseModule mod
   --> Certificate cert
 }
 
