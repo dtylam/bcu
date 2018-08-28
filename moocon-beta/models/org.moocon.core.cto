@@ -112,7 +112,7 @@ asset Certificate identified by certId {
   --> Learner learner
   --> Teacher[] signatories
   --> Submission[] subs 
-  --> Curriculum curriculum optional
+  --> Curriculum curriculum
   o AssessmentResult overallResult optional
   o String detailsMd
   o Boolean visible default = false
@@ -172,7 +172,8 @@ event CurriculumProposed {
 
 transaction ApproveCurriculum {
   o Curriculum curriculum
-  o Boolean[] hasCert
+  o Boolean[] hasCert 
+  // [0] for whether the curriculum has a cert, [n!=0] for the list of courses
 }
 
 event CurriculumApproved {

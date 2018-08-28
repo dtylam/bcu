@@ -47,7 +47,8 @@ function createModule(ncmtx) {
  * or to proposed edits to an existing curriculum on the blockchain.
  * 
  * Tx2 ApproveCurriculum: ordered by a teacher to accept a proposed curriculum and 
- * it automatically enrols the learner to the courses and updates relevant records.
+ * it automatically enrols the learner to the courses and updates relevant records;
+ * it also generates unfulfilled and unsigned certificates
  */
 
 /**
@@ -140,21 +141,53 @@ function approveCurriculum(actx) {
                                 var mod = currMods[i];
                                 learner.mods.push(mod);
                             }
-                            // Get the participant registry for the learner
-                            return getParticipantRegistry(NS + '.Learner')
-                                .then(function (learnerRegistry) {
-                                    // Update the learner in the learner registry
-                                    return learnerRegistry.update(learner);
-                                })
-                                .then(function () {
-                                    // Emit a BalanceChanges event for the learner
-                                    var event = factory.newEvent(NS, 'BalanceChanges');
-                                    event.user = learner;
-                                    event.oldBalance = oldBalance;
-                                    event.newBalance = learner.balance;
-                                    event.details = actx.curriculum.currId;
-                                    emit(event);
-                                });
+
+                            // Get the certificates registry
+                            return getAssetRegistry(NS + '.Certificate').then(function (certRegistry) {
+                                // loop through the hasCert instructions
+                                // [0] for whether the curriculum has a cert, [n!=0] for the list of courses
+                                for (var i = 0; i < actx.hasCert.length; i++) {
+                                    // create new Cert objects if needed
+                                    if (actx.hasCert[i]) {
+                                        var certId;
+                                        // certId for curriculum
+                                        certId = actx.curriculum.currId
+                                        // certId for courses
+                                        if (i != 0) certId = certId + currMods[i - 1].modId
+                                        
+                                        // new cert fields
+                                        var newcert = factory.newResource(NS, 'Certificate', certId);
+                                        newcert.learner = learner;
+                                        newcert.signatories = [];
+                                        newcert.subs = [];
+                                        newcert.curriculum = factory.newRelationship(
+                                            NS, 'Curriculum', actx.curriculum.currId);
+                                        newcert.detailsMd = "Blockchain University is not a real university. These course are not real taught courses. All names and characters are fictional. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam turpis, consectetur.";
+
+                                        // create this new cert on blockchain
+                                        certRegistry.add(newcert);
+                                        // add pointer of new cert on blockchain
+                                        learner.certs.push(newcert);
+                                    }
+                                }
+
+                            }).then(function () {
+                                // Get the participant registry for the learner
+                                return getParticipantRegistry(NS + '.Learner')
+                                    .then(function (learnerRegistry) {
+                                        // Update the learner in the learner registry
+                                        return learnerRegistry.update(learner);
+                                    })
+                                    .then(function () {
+                                        // Emit a BalanceChanges event for the learner
+                                        var event = factory.newEvent(NS, 'BalanceChanges');
+                                        event.user = learner;
+                                        event.oldBalance = oldBalance;
+                                        event.newBalance = learner.balance;
+                                        event.details = actx.curriculum.currId;
+                                        emit(event);
+                                    });
+                            })
                         })
                     })
             })
@@ -374,9 +407,6 @@ function signCertificate(sctx) {
         throw new Error("curriculum certificate not implemented")
     }
     else {
-        var lastSubmission = sctx.subs[sctx.subs.length - 1]
-        // asset only one mod is involved!
-        var thisMod = lastSubmission.unit.mod;
         var cert = factory.newResource(NS, 'Certificate',
             lastSubmission.learner.uId + "_" + thisMod.modId +
             + date.getFullYear() + date.getMonth());
