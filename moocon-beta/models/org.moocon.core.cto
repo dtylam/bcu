@@ -180,8 +180,10 @@ event CurriculumApproved {
   --> Curriculum curriculum
 }
 
-/*
+/**
  * Certificate Awarding Use Case
+ * Tx 5 SignCertificate: 
+ * 
  */
 
 transaction SignCertificate {

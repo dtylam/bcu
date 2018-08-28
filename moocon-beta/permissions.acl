@@ -201,11 +201,20 @@ rule Teacher_Learner_Update_Curr {
     action: ALLOW
 }
 
-rule Teacher_Learner_Update_Cert {
-    description: "Allow all teachers to update learner's information if the learner has subscribed to a course"
+rule Teacher_Create_Cert {
+    description: "Allow all teachers to create cert via ApproveCurriculum"
+    participant: "org.moocon.core.Teacher"
+    operation: CREATE
+    resource: "org.moocon.core.Certificate"
+    transaction: "org.moocon.core.ApproveCurriculum"    
+    action: ALLOW
+}
+
+rule Teacher_Update_Cert {
+    description: "Allow all teachers to update cert via SignCertificate"
     participant: "org.moocon.core.Teacher"
     operation: UPDATE
-    resource: "org.moocon.core.Learner"
+    resource: "org.moocon.core.Certificate"
     transaction: "org.moocon.core.SignCertificate"    
     action: ALLOW
 }
@@ -317,6 +326,14 @@ rule Teacher_ApproveCurriculum {
     participant: "org.moocon.core.Teacher"
     operation: CREATE, READ
     resource: "org.moocon.core.ApproveCurriculum"
+    action: ALLOW
+}
+
+rule Teacher_ApproveCurriculum {
+    description: "Allow all teacher to create SignCertificate tx"
+    participant: "org.moocon.core.Teacher"
+    operation: CREATE, READ
+    resource: "org.moocon.core.SignCertificate"
     action: ALLOW
 }
 

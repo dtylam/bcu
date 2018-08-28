@@ -154,7 +154,7 @@ function approveCurriculum(actx) {
                                         certId = actx.curriculum.currId
                                         // certId for courses
                                         if (i != 0) certId = certId + currMods[i - 1].modId
-                                        
+
                                         // new cert fields
                                         var newcert = factory.newResource(NS, 'Certificate', certId);
                                         newcert.learner = learner;
@@ -402,100 +402,22 @@ function submitResult(srtx) {
  */
 function signCertificate(sctx) {
     var NS = 'org.moocon.core';
-    var factory = getFactory();
-    if (sctx.hasOwnProperty('curriculum')) {
-        throw new Error("curriculum certificate not implemented")
-    }
-    else {
-        var cert = factory.newResource(NS, 'Certificate',
-            lastSubmission.learner.uId + "_" + thisMod.modId +
-            + date.getFullYear() + date.getMonth());
-        cert.learner = lastSubmission.learner;
-        cert.teacher = sctx.signer;
-        cert.mods = [factory.newRelationship(
-            NS, 'CourseModule', thisMod.modId)]
-        // asset that no further pass checking is required
-        cert.subs = sctx.subs;
-        cert.fineprintMd = "Blockchain University is not a real university. These course are not real taught courses. All names and characters are fictional. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam turpis, consectetur.";
-
-        // var passedSubs = sctx.subs.filter(sub => sub.result.passed);
-        // var highestSubs = {};
-        // thisMod.units.forEach(function (unit) {
-        //     passedSubs.forEach(
-
-        //     )
-        // })
-        // TODO: cert.overallResult
-
-        return getAssetRegistry(NS + '.Certificate')
-            .then(function (certificateRegistry) {
-                certificateRegistry.add(cert);
-            })// update learner's list of submissions
-            .then(function () {
-                return getParticipantRegistry(NS + '.Learner');
-            })
-            .then(function (learnerRegistry) {
-                cert.learner.certs.push(cert)
-                return learnerRegistry.update(cert.learner);
-            }).then(function () {
-                // Emit an event for the new cert.
-                var event = getFactory().newEvent(NS, 'NewCertificate');
-                event.mod = thisMod;
-                event.cert = cert;
-                emit(event);
-            })
-    }
-
-}
-// legacy functions
-
-/**
- * Begin module processor function.
- * @param {org.moocon.core.BeginModule} bmtx - new module beginning
- * @transaction
- */
-function beginModule(bmtx) {
-    var NS = 'org.moocon.core';
-    var factory = getFactory();
-
-    // get module id
-    var modId = bmtx.mod.modId;
-    // proposed new relationship
-    var relationship = factory.newRelationship(
-        NS, 'CourseModule', modId);
-
-    // check if user has already purchased the module
-    if (bmtx.learner.mods.includes(bmtx.mod)) {
-        throw new Error('You have already started the module.');
-    }
-
-    // Save the cost of the module.
-    var cost = bmtx.mod.cost;
-    // Save the old balance of the learner.
-    var balance = bmtx.learner.balance;
-    //check if can afford
-    if (balance < cost) {
-        throw new Error('Your credit balance is not enough for the module!');
-    }
-
-    //add it to learner's ongoing modules list
-    bmtx.learner.mods.push(bmtx.mod);
-    // Update the balance of the learner.
-    bmtx.learner.balance = balance - cost;
-
-    // Get the participant registry for the learner.
-    return getParticipantRegistry('org.moocon.core.Learner')
-        .then(function (learnerRegistry) {
-            // Update the participant in the participant registry.
-            return learnerRegistry.update(bmtx.learner);
+    var cert = sctx.cert;
+    return getAssetRegistry(NS + '.Certificate')
+        .then(function (certRegistry) {
+            // Example check: signer should be the teacher who approved of the curriculum
+            if (sctx.signer == cert.curriculum.teacher) {
+                cert.signatories.push(sctx.signer);
+                return certRegistry.update(submission);
+            }
+            else throw new Error("Certificate signer and curriculum approver are not the same!");
         })
-        .then(function () {
-            // Emit an event for the modified learner.
-            var event = getFactory().newEvent(NS, 'BalanceChanges');
-            event.user = bmtx.learner;
-            event.oldBalance = balance;
-            event.newBalance = bmtx.learner.balance;
-            event.details = modId;
-            emit(event);
-        });
+        // .then(function () {
+        //     // Emit an event for the new cert.
+        //     var event = getFactory().newEvent(NS, 'NewCertificate');
+        //     event.mod = thisMod;
+        //     event.cert = cert;
+        //     emit(event);
+        // })
+
 }
