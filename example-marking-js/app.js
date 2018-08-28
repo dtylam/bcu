@@ -63,7 +63,7 @@ app.post('/mocha/', jsonParser, function(req, res) {
 
 /* GET: serve index page */
 app.get('/', function(req, res) {
-  res.render('index', { title: 'moocon-js-marking' });
+  res.render('index', { title: 'bcu example marking' });
 });
 
 /* PUT: not allowed */

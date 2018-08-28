@@ -3,8 +3,8 @@
 
 PURPLE='\033[0;35m'
 NC='\033[0m' # No Color
-FABRICDIR=~/fabric-tools
-MOOCONDIR=~/GitHub/moocon-beta
+FABRICDIR=~/fabric-tools # replace with your Fabric installation's tools dir 
+MOOCONDIR=~/GitHub/moocon-beta # replace with your blockchain definitions working dir 
 cd $MOOCONDIR
 
 echo -e "${PURPLE}creating learner user L01${NC}"

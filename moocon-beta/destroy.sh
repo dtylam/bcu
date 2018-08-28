@@ -1,7 +1,7 @@
 #!/bin/bash
 
-FABRICDIR=~/fabric-tools
-MOOCONDIR=~/GitHub/moocon-beta
+FABRICDIR=~/fabric-tools # replace with your Fabric installation's tools dir 
+MOOCONDIR=~/GitHub/moocon-beta  # replace with your blockchain definitions working dir 
 
 # delete cards that will be old
 cd $MOOCONDIR

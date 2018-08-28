@@ -88,22 +88,27 @@ function proposeCurriculum(pctx) {
 function approveCurriculum(actx) {
     var NS = 'org.moocon.core';
     var factory = getFactory();
-    actx.curriculum.approved = true;
     var learner = actx.curriculum.learner;
+    // Mark curriculum as approved
+    actx.curriculum.approved = true;
 
+    // Get the curriculum registry
     return getAssetRegistry(NS + '.Curriculum')
         .then(function (curriculumRegistry) {
+            // Update the curriculum object on the blockchain
             return curriculumRegistry.update(actx.curriculum).then(function () {
-                // Emit an event for the modified learner.
-                var event = getFactory().newEvent(NS, 'CurriculumApproved');
+                // Emit a CurriculumApproved event for the learner.
+                var event = factory.newEvent(NS, 'CurriculumApproved');
                 event.curriculum = actx.curriculum;
                 emit(event);
             }).then(function () {
                 var currCost = 0;
                 var oldBalance = learner.balance;
                 var currMods = [];
+                // Get the coursemodule registry
                 return getAssetRegistry(NS + '.CourseModule').then(
                     function (modRegistry) {
+                        // Find the coursemodules in this curriculum
                         var promises = []
                         for (var i = 0; i < actx.curriculum.modIds.length; i++) {
                             var modId = actx.curriculum.modIds[i];
@@ -113,33 +118,37 @@ function approveCurriculum(actx) {
                         Promise.all(promises).then(function (mods) {
                             currMods = mods;
                             for (var i = 0; i < currMods.length; i++) {
-                                // check if user has already purchased the module
+                                // Example check 1: if user has already subscribed to the module
                                 if (learner.mods.includes(currMods[i])) {
                                     throw new Error('Student has already started one of the modules.');
                                 }
+                                // End of example check 1
+
+                                // Summing up the total cost of the curriculum
                                 currCost = currCost + currMods[i].cost;
                             }
-                            //check if can afford
+                            //Example check 2 : if credit balance is enough to afford the new curriculum
                             if (oldBalance < currCost) {
                                 throw new Error('Your credit balance is not enough for the module!');
                             }
-                            // Update the balance of the learner.
+                            // End of example check 2
+
+                            // Update the balance of the learner
                             learner.balance = oldBalance - currCost;
-                            //add it to learner's ongoing modules list
+                            //Add the list of new modules to learner's ongoing modules list
                             for (var i = 0; i < currMods.length; i++) {
                                 var mod = currMods[i];
                                 learner.mods.push(mod);
                             }
-                            // throw new Error("mods length is " + learner.mods.length)
-                            // Get the participant registry for the learner.
+                            // Get the participant registry for the learner
                             return getParticipantRegistry(NS + '.Learner')
                                 .then(function (learnerRegistry) {
-                                    // Update the participant in the participant registry.
+                                    // Update the learner in the learner registry
                                     return learnerRegistry.update(learner);
                                 })
                                 .then(function () {
-                                    // Emit an event for the modified learner.
-                                    var event = getFactory().newEvent(NS, 'BalanceChanges');
+                                    // Emit a BalanceChanges event for the learner
+                                    var event = factory.newEvent(NS, 'BalanceChanges');
                                     event.user = learner;
                                     event.oldBalance = oldBalance;
                                     event.newBalance = learner.balance;
@@ -147,8 +156,6 @@ function approveCurriculum(actx) {
                                     emit(event);
                                 });
                         })
-
-                        // throw new Error("currMods length is " + currMods.length)
                     })
             })
         });

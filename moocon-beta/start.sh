@@ -3,8 +3,8 @@
 
 PURPLE='\033[0;35m'
 NC='\033[0m' # No Color
-FABRICDIR=~/fabric-tools
-MOOCONDIR=~/GitHub/moocon-beta
+FABRICDIR=~/fabric-tools # replace with your Fabric installation's tools dir 
+MOOCONDIR=~/GitHub/moocon-beta # replace with your blockchain definitions working dir 
 
 echo -e "${PURPLE}starting local Hyperledger Fabric${NC}"
 cd $FABRICDIR
@@ -25,7 +25,7 @@ composer card import --file networkadmin.card
 
 composer network ping --card admin@moocon-beta
 
-# load participants for network
+# load participants for network, comment out if you want an empty network instead
 ./load_participant.sh
 
 echo -e "${PURPLE}starting the rest server as admin authed with GitHub${NC}"

@@ -14,6 +14,6 @@ curriculum personalisation, and learner privacy.
 
 Components built:
 - [Blockchain network schema (Hyperledger Composer deployment definitions)](moocon-beta/)
-- [Learner's Client Application (Vue.js web app)](moocon-learner-client/)
-- [Teacher's Client Application (Vue.js web app)](moocon-teacher-client/)
-- [Example Automated Marking Server (Express.js web app)](moocon-js-marking/)
+- [Learner's Client Application (Vue.js web app)](client-learners/)
+- [Teacher's Client Application (Vue.js web app)](client-teachers/)
+- [Example Automated Marking Server (Express.js web app)](example-marking-js/)
