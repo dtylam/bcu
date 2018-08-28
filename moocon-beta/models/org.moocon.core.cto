@@ -192,7 +192,7 @@ transaction SignCertificate {
 }
 
 event NewCertificate {
-  --> Certificate cert
+  o String certId
 }
 
 /**
@@ -290,13 +290,14 @@ transaction EditAssessment {
 //   --> Submission submission
 // }
 
-// asset AutoAssessRequest identified by reqId {
-//   o String reqId
-//   --> Submission submission
-//   o String content
-//   o String testFile
-//   o String response optional
-// }
+// additional asset required for automatic marking API calls 
+asset AutoAssessRequest identified by reqId {
+  o String reqId
+  --> Submission submission
+  o String content
+  o String testFile
+  o String response optional
+}
 
 
 

@@ -113,11 +113,12 @@ rule Learner_AutoAssessRequest {
     action: ALLOW
 }
 
-rule Learner_AutoAssess {
-    description: "Allow all learners to create their own AutoAssess transaction"
+rule Teacher_Update_Cert_2 {
+    description: "Allow all learners to update cert via AddSubmission"
     participant: "org.moocon.core.Learner"
-    operation: CREATE
-    resource: "org.moocon.core.AutoAssess"
+    operation: UPDATE
+    resource: "org.moocon.core.Certificate"
+    transaction: "org.moocon.core.AddSubmission"    
     action: ALLOW
 }
 
@@ -216,6 +217,15 @@ rule Teacher_Update_Cert {
     operation: UPDATE
     resource: "org.moocon.core.Certificate"
     transaction: "org.moocon.core.SignCertificate"    
+    action: ALLOW
+}
+
+rule Teacher_Update_Cert_2 {
+    description: "Allow all teachers to update cert via SubmitResult"
+    participant: "org.moocon.core.Teacher"
+    operation: UPDATE
+    resource: "org.moocon.core.Certificate"
+    transaction: "org.moocon.core.SubmitResult"    
     action: ALLOW
 }
 
@@ -329,11 +339,12 @@ rule Teacher_ApproveCurriculum {
     action: ALLOW
 }
 
-rule Teacher_ApproveCurriculum {
-    description: "Allow all teacher to create SignCertificate tx"
-    participant: "org.moocon.core.Teacher"
+rule Teacher_SignCertificate {
+    description: "Allow all teacher to create SignCertificate tx with signer == themselves"
+    participant(p): "org.moocon.core.Teacher"
     operation: CREATE, READ
-    resource: "org.moocon.core.SignCertificate"
+    resource(r): "org.moocon.core.SignCertificate"
+    condition: (r.signer.getIdentifier() == p.getIdentifier())
     action: ALLOW
 }
 

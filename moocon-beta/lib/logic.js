@@ -73,7 +73,7 @@ function proposeCurriculum(pctx) {
             .then(function (curriculumRegistry) {
                 return curriculumRegistry.add(curriculum).then(function () {
                     // Emit an event for the modified learner.
-                    var event = getFactory().newEvent(NS, 'CurriculumProposed');
+                    var event = factory.newEvent(NS, 'CurriculumProposed');
                     event.curriculum = curriculum;
                     emit(event);
                 });
@@ -96,7 +96,7 @@ function approveCurriculum(actx) {
     // Get the curriculum registry
     return getAssetRegistry(NS + '.Curriculum')
         .then(function (curriculumRegistry) {
-            // Update the curriculum object on the blockchain
+            // Update the curriculum asset on the blockchain
             return curriculumRegistry.update(actx.curriculum).then(function () {
                 // Emit a CurriculumApproved event for the learner.
                 var event = factory.newEvent(NS, 'CurriculumApproved');
@@ -147,7 +147,7 @@ function approveCurriculum(actx) {
                                 // loop through the hasCert instructions
                                 // [0] for whether the curriculum has a cert, [n!=0] for the list of courses
                                 for (var i = 0; i < actx.hasCert.length; i++) {
-                                    // create new Cert objects if needed
+                                    // create new Cert assets if needed
                                     if (actx.hasCert[i]) {
                                         var certId;
                                         // certId for curriculum
@@ -213,14 +213,12 @@ function approveCurriculum(actx) {
 function addSubmission(nsubtx) {
     var NS = 'org.moocon.core';
     var factory = getFactory();
-    var date = new Date();
-
-    //create submission id
+    var date = new Date(); //today's date
+    //create id for the new Submission asset
     var subId = nsubtx.unit.unitId + "_" + nsubtx.learner.uId + "_" +
         Math.random().toString(36).substring(3)
-    //create new Submission asset
+    //filling in fields for new Submission asset
     var submission = factory.newResource(NS, 'Submission', subId);
-    //mapping fields
     submission.learner = nsubtx.learner;
     submission.teacherAssigned = factory.newRelationship(
         NS, 'Teacher', nsubtx.unit.mod.teachers[0].getIdentifier());
@@ -228,31 +226,30 @@ function addSubmission(nsubtx) {
     submission.content = nsubtx.content;
     submission.comments = nsubtx.comments;
     submission.timeAdded = date;
-
     submission.learner.subs.push(factory.newRelationship(
         NS, 'Submission', subId));
 
+    // For auto assessments, send request to example marking API
     var assessment = nsubtx.unit.assessment;
-    // do extra for auto assessments
     if (assessment.instanceOf(NS + '.AutoAssessment')) {
         //create new AutoAssessRequest asset
         var request = factory.newResource(
-            NS, 'AutoAssessRequest', submission.subId);
+            NS, 'AutoAssessRequest', submission.subId + date);
         request.submission = factory.newRelationship(
             NS, 'Submission', submission.subId);
         request.content = submission.content;
         request.testFile = submission.unit.assessment.testFile;
-
-        //post(url,data)
+        //send the request with post(url,data)
         var url = "https://moocon-js-marking.herokuapp.com/equivalence/";
         return post(url, request).then(function (resp) {
             console.log('@debug assess ext resp ', JSON.stringify(resp));
             request.response = resp.body;
+            //store record of AutoAssessRequest
             getAssetRegistry(NS + '.AutoAssessRequest')
                 .then(function (reqRegistry) {
                     return reqRegistry.add(request);
                 });
-            //update result of submission record    
+            //update result of Submission asset    
             var result = factory.newConcept(NS, 'PassFailResult');
             result.passed = request.response;
             result.feedbackMd = "Automatic Testing Service has no feedback messages for this submission."
@@ -260,6 +257,7 @@ function addSubmission(nsubtx) {
             submission.result = result;
             submission.timeAssessed = date;
 
+            //commit Submission asset to the blockchain
             return getAssetRegistry(NS + '.Submission')
                 .then(function (submissionRegistry) {
                     return submissionRegistry.add(submission);
@@ -271,19 +269,50 @@ function addSubmission(nsubtx) {
                 .then(function (learnerRegistry) {
                     learnerRegistry.update(submission.learner);
                 }).then(function () {
-                    // Emit an ResultAvailable event.
-                    var event = getFactory().newEvent(NS, 'ResultAvailable');
+                    // Emit a ResultAvailable event.
+                    var event = factory.newEvent(NS, 'ResultAvailable');
                     event.submission = submission;
                     event.unitId = submission.unit.unitId;
                     event.details = result.passed.toString();
                     emit(event);
+                }).then(function () {
+                    if (submission.result.passed) {
+                        // Emit a CourseModuleCompleted event if the assessment is terminal and a pass
+                        if (assessment.terminal) {
+                            var event = factory.newEvent(NS, 'CourseModuleCompleted');
+                            event.teacherAssigned = submission.teacherAssigned;
+                            event.submission = submission;
+                            event.modId = submission.unit.mod.modId;
+                            emit(event);
+                        }
+
+                        // add submission to the relevant certificates if it is a pass.
+                        submission.learner.certs.forEach(cert => {
+                            cert.curriculum.modIds.forEach(modId => {
+                                if (modId == submission.unit.mod) {
+                                    cert.subs.push(factory.newRelationship(
+                                        NS, 'Submission', submission.subId))
+                                    // switch certificate visibility on if the assessment is terminal
+                                    if (assessment.terminal) cert.visible = true
+                                    // commit updates to certificate on blockchain
+                                    return getAssetRegistry(NS + '.Certificate')
+                                        .then(function (certRegistry) {
+                                            return certRegistry.update(cert);
+                                        }).then(function () {
+                                            if (cert.visible) {
+                                                var event = factory.newEvent(NS, 'NewCertificate');
+                                                event.certId = cert.certId;
+                                                emit(event);
+                                            }
+                                        });
+                                }
+                            })
+                        })
+                    }
                 });
         });
     }
-    else if (assessment.instanceOf(NS + '.PeerAssessment')) {
-        throw new Error('Peer Assessment not implemented');
-    }
-    // do nothing AssessorAssessment / SelfAssessment
+    // For AssessorAssessment
     else {
         //add new Submission asset
         return getAssetRegistry(NS + '.Submission')
@@ -298,8 +327,8 @@ function addSubmission(nsubtx) {
                 learnerRegistry.update(submission.learner);
             })
             .then(function () {
-                // Emit an event for a new submission.
-                var event = getFactory().newEvent(NS, 'SubmissionUploaded');
+                // Emit an event for a new submission to notify Assessors.
+                var event = factory.newEvent(NS, 'SubmissionUploaded');
                 event.submission = submission;
                 event.unitId = submission.unit.unitId;
                 if (assessment.instanceOf(NS + '.AssessorAssessment'))
@@ -377,19 +406,44 @@ function submitResult(srtx) {
             return submissionRegistry.update(submission);
         }).then(function () {
             // Emit an ResultAvailable event.
-            var event = getFactory().newEvent(NS, 'ResultAvailable');
+            var event = factory.newEvent(NS, 'ResultAvailable');
             event.submission = submission;
             event.unitId = submission.unit.unitId;
             event.details = submission.result.passed.toString();
             emit(event);
         }).then(function () {
-            if (submission.result.passed && submission.unit.assessment.terminal) {
-                // Emit an CourseModuleCompleted event.
-                var event = getFactory().newEvent(NS, 'CourseModuleCompleted');
-                event.teacherAssigned = submission.teacherAssigned;
-                event.submission = submission;
-                event.modId = submission.unit.mod.modId;
-                emit(event);
+            if (submission.result.passed) {
+                // Emit a CourseModuleCompleted event if the assessment is terminal and a pass
+                if (assessment.terminal) {
+                    var event = factory.newEvent(NS, 'CourseModuleCompleted');
+                    event.teacherAssigned = submission.teacherAssigned;
+                    event.submission = submission;
+                    event.modId = submission.unit.mod.modId;
+                    emit(event);
+                }
+
+                // add submission to the relevant certificates if it is a pass.
+                submission.learner.certs.forEach(cert => {
+                    cert.curriculum.modIds.forEach(modId => {
+                        if (modId == submission.unit.mod) {
+                            cert.subs.push(factory.newRelationship(
+                                NS, 'Submission', submission.subId))
+                            // switch certificate visibility on if the assessment is terminal
+                            if (assessment.terminal) cert.visible = true
+                            // commit updates to certificate on blockchain
+                            return getAssetRegistry(NS + '.Certificate')
+                                .then(function (certRegistry) {
+                                    return certRegistry.update(cert);
+                                }).then(function () {
+                                    if (cert.visible) {
+                                        var event = factory.newEvent(NS, 'NewCertificate');
+                                        event.certId = cert.certId;
+                                        emit(event);
+                                    }
+                                })
+                        }
+                    })
+                })
             }
         });
 }
@@ -412,12 +466,12 @@ function signCertificate(sctx) {
             }
             else throw new Error("Certificate signer and curriculum approver are not the same!");
         })
-        // .then(function () {
-        //     // Emit an event for the new cert.
-        //     var event = getFactory().newEvent(NS, 'NewCertificate');
-        //     event.mod = thisMod;
-        //     event.cert = cert;
-        //     emit(event);
-        // })
+    // .then(function () {
+    //     // Emit an event for the new cert.
+    //     var event = getFactory().newEvent(NS, 'NewCertificate');
+    //     event.mod = thisMod;
+    //     event.cert = cert;
+    //     emit(event);
+    // })
 
 }
