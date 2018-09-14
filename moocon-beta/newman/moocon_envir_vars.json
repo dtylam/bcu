@@ -1,0 +1,16 @@
+{
+  "id": "b9a9d0a3-e249-4292-99ac-4779373a8dcb",
+  "name": "moocon",
+  "values": [
+    {
+      "key": "token",
+      "value": "h5XlGYFi08wsdwE4nQLXUbb6bbh1VKhPD6FCZIdjZf2CXhfRXITiWRN8hBRPenPo",
+      "description": "",
+      "type": "text",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2018-09-14T11:58:15.597Z",
+  "_postman_exported_using": "Postman/6.0.10"
+}

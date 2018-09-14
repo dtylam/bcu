@@ -1,0 +1,595 @@
+{
+	"info": {
+		"_postman_id": "5d030203-d78e-fa21-f066-780a5b7f425d",
+		"name": "moocon-rest-load-courses",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "setdefault T01",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c50a4b4e-5c0d-47e4-9d5b-eb58425616cd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/wallet/T01%40moocon-beta/setDefault",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"wallet",
+						"T01%40moocon-beta",
+						"setDefault"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course WEB001",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "466fb274-ccb8-4fdf-b480-594b8ddbc565",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"WEB001\",\"teachers\":[\"resource:org.moocon.core.Teacher#T01\"],\"modTitle\":\"Introduction to JavaScript\",\"cost\":10,\"prerequisites\":[],\"corequisites\":[],\"learningObjectives\":[\"Using and selecting data structures such as arrays.\",\"Using elementary programming constructs: conditions, loops.\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"WEB001A\",\"mod\":\"resource:org.moocon.core.CourseModule#WEB001\",\"unitTitle\":\"Data Structures\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"WEB001_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#WEB001A\",\"terminal\":false,\"weighting\":10,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Primitive Data Types: What? When? How?\",\"Arrays: What? When? How?\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"WEB001B\",\"mod\":\"resource:org.moocon.core.CourseModule#WEB001\",\"unitTitle\":\"Conditionals and Loops\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AssessorAssessment\",\"assessId\":\"WEB001_TEST002\",\"unit\":\"resource:org.moocon.core.ModuleUnit#WEB001B\",\"terminal\":false,\"weighting\":40,\"resultType\":\"GradeResult\",\"knowledgeRequired\":[\"Conditionals: What? When? How?\",\"Loops: What? When? How?\"],\"detailsMd\":\"Details\",\"testType\":\"Marking\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"A\",\"descriptions\":\"a comprehensive and critical understanding of the topic;                            a high level of independent thinking and development of own ideas;                            an ability to develop a complex argument solution or evaluation;                            a highly critical evaluation of the relevant literature and theories, where appropriate;                            a high standard of competence in the appropriate use of methodologies for analysis;                            and synthesis;                            an excellent ability to communicate clearly and concisely;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"B\",\"descriptions\":\"a critical understanding of the topic;                            independent thinking and development of own ideas;                            an ability to develop a well-structured argument, solution, evaluation or explanation;                            a critical evaluation of the relevant literature and theories, where appropriate;                            a high standard of competence in the use of appropriate methodologies for analysis                            and synthesis;                            an ability to communicate clearly and concisely;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"C\",\"descriptions\":\"a good understanding of the topic;                            some evidence of independent thinking and development of own ideas;                            an ability to develop a structured argument, solution, evaluation or explanation;                            evaluation of the relevant literature and theories, where appropriate;                            competence in the use of appropriate methodologies for analysis and synthesis;                            an ability to communicate clearly and effectively;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"D\",\"descriptions\":\"evidence of a coherent understanding of the key aspects of the topic;                            limited independent thinking and development of own ideas;                            the ability to present a sufficiently structured argument, solution, or explanation;                            evidence of some evaluation of the relevant literature and theories, where appropriate;                            use of the relevant methodologies for analysis and synthesis to an acceptable standard;                            evidence of effective communication skills;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"E\",\"descriptions\":\"evidence of some understanding of key aspects of the topic;                            no evidence of independent thinking and development of own ideas;                            some ability to present an appropriate argument, solution or explanation;                            limited evaluation of the relevant literature and theories;                            limited use of relevant methodologies;                            little evidence of effective communication;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"F\",\"descriptions\":\"Unacceptable work that fails to demonstrate relevant knowledge, understanding or skills                            to any significant degree and/or clearly fails to meet key learning outcomes in the                            assessed task;\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Functionality Correctness\",\"details\":\"How accurately does the implementation fulfil the task requirements\",\"weighting\":30},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Design of Control Flows\",\"details\":\"How well does the implementation employ if/ else conditions and while/ for loops\",\"weighting\":50},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Readability and good coding practices\",\"details\":\"How well does the implementation use identations and classes\",\"weighting\":20}],\"passingStandard\":3}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"WEB001C\",\"mod\":\"resource:org.moocon.core.CourseModule#WEB001\",\"unitTitle\":\"Viva\",\"materialMd\":\"\",\"assessment\":{\"$class\":\"org.moocon.core.AssessorAssessment\",\"assessId\":\"WEB001_TEST003\",\"unit\":\"resource:org.moocon.core.ModuleUnit#WEB001C\",\"terminal\":true,\"weighting\":60,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Understanding of previously authored code\"],\"detailsMd\":\"Details\",\"testType\":\"Viva\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The assessor has deemed your understanding of the topic to be sufficient\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The assessor has deemed your understanding of the topic to be insufficient\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Primitive Data Structures\",\"details\":\"Understanding of eg. integer, double, string, etc.\",\"weighting\":25},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Data Structures\",\"details\":\"Understanding of eg. arrays, enum, etc.\",\"weighting\":25},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Conditionals\",\"details\":\"Understanding of eg. if, else-if, else.\",\"weighting\":25},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Loops\",\"details\":\"Understanding of for, for... in, while, etc.\",\"weighting\":25}],\"passingStandard\":0}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course WEB002",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d967f85e-793e-49d8-932f-27831caab72e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"WEB002\",\"teachers\":[\"resource:org.moocon.core.Teacher#T01\"],\"modTitle\":\"Advanced JavaScript\",\"cost\":20,\"prerequisites\":[\"resource:org.moocon.core.CourseModule#CM001\"],\"corequisites\":[],\"learningObjectives\":[\"Using algorithms including searching and sorting.\",\"Using a component driven way to programme effectively.\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"WEB002A\",\"mod\":\"resource:org.moocon.core.CourseModule#WEB002\",\"unitTitle\":\"Search and Sorting\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"WEB002_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#WEB002A\",\"terminal\":false,\"weighting\":0,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Searching: Binary Trees\",\"Sorting: Bubble, Merge, Tim\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"WEB002B\",\"mod\":\"resource:org.moocon.core.CourseModule#WEB002\",\"unitTitle\":\"Conditionals and Loops\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AssessorAssessment\",\"assessId\":\"WEB002_TEST002\",\"unit\":\"resource:org.moocon.core.ModuleUnit#WEB002B\",\"terminal\":false,\"weighting\":40,\"resultType\":\"GradeResult\",\"knowledgeRequired\":[\"Vue.js\",\"Angular.js\",\"Components\"],\"detailsMd\":\"Details\",\"testType\":\"Marking\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"A\",\"descriptions\":\"a comprehensive and critical understanding of the topic;                            a high level of independent thinking and development of own ideas;                            an ability to develop a complex argument solution or evaluation;                            a highly critical evaluation of the relevant literature and theories, where appropriate;                            a high standard of competence in the appropriate use of methodologies for analysis;                            and synthesis;                            an excellent ability to communicate clearly and concisely;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"B\",\"descriptions\":\"a critical understanding of the topic;                            independent thinking and development of own ideas;                            an ability to develop a well-structured argument, solution, evaluation or explanation;                            a critical evaluation of the relevant literature and theories, where appropriate;                            a high standard of competence in the use of appropriate methodologies for analysis                            and synthesis;                            an ability to communicate clearly and concisely;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"C\",\"descriptions\":\"a good understanding of the topic;                            some evidence of independent thinking and development of own ideas;                            an ability to develop a structured argument, solution, evaluation or explanation;                            evaluation of the relevant literature and theories, where appropriate;                            competence in the use of appropriate methodologies for analysis and synthesis;                            an ability to communicate clearly and effectively;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"D\",\"descriptions\":\"evidence of a coherent understanding of the key aspects of the topic;                            limited independent thinking and development of own ideas;                            the ability to present a sufficiently structured argument, solution, or explanation;                            evidence of some evaluation of the relevant literature and theories, where appropriate;                            use of the relevant methodologies for analysis and synthesis to an acceptable standard;                            evidence of effective communication skills;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"E\",\"descriptions\":\"evidence of some understanding of key aspects of the topic;                            no evidence of independent thinking and development of own ideas;                            some ability to present an appropriate argument, solution or explanation;                            limited evaluation of the relevant literature and theories;                            limited use of relevant methodologies;                            little evidence of effective communication;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"F\",\"descriptions\":\"Unacceptable work that fails to demonstrate relevant knowledge, understanding or skills                            to any significant degree and/or clearly fails to meet key learning outcomes in the                            assessed task;\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Functionality Correctness\",\"details\":\"How accurately does the implementation fulfil the task requirements\",\"weighting\":30},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Design of Control Flows\",\"details\":\"How well does the implementation employ if/ else conditions and while/ for loops\",\"weighting\":50},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Readability and good coding practices\",\"details\":\"How well does the implementation use identations and classes\",\"weighting\":20}],\"passingStandard\":3}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"WEB002C\",\"mod\":\"resource:org.moocon.core.CourseModule#WEB002\",\"unitTitle\":\"Viva\",\"materialMd\":\"\",\"assessment\":{\"$class\":\"org.moocon.core.AssessorAssessment\",\"assessId\":\"WEB002_TEST003\",\"unit\":\"resource:org.moocon.core.ModuleUnit#WEB002C\",\"terminal\":true,\"weighting\":60,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Understanding of previously authored code\"],\"detailsMd\":\"Details\",\"testType\":\"Viva\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The assessor has deemed your understanding of the topic to be sufficient\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The assessor has deemed your understanding of the topic to be insufficient\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Primitive Data Structures\",\"details\":\"Understanding of eg. integer, double, string, etc.\",\"weighting\":50},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Data Structures\",\"details\":\"Understanding of eg. arrays, enum, etc.\",\"weighting\":50}],\"passingStandard\":0}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course CS006",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7766333c-58d4-492e-a581-29f60be55ada",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"CS006\",\"teachers\":[\"resource:org.moocon.core.Teacher#T01\"],\"modTitle\":\"Usability Engineering\",\"cost\":10,\"prerequisites\":[],\"corequisites\":[],\"learningObjectives\":[\"Understanding, identifying and using Norman's rules for good design.\",\"Prototyping with wireframes.\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"CS006A\",\"mod\":\"resource:org.moocon.core.CourseModule#CS006\",\"unitTitle\":\"Usability Heuristics\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.SelfAssessment\",\"assessId\":\"CS006_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#CS006A\",\"terminal\":false,\"weighting\":0,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Norman's 10 Heuristics\"],\"detailsMd\":\"Details\"}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"CS006B\",\"mod\":\"resource:org.moocon.core.CourseModule#CS006\",\"unitTitle\":\"Portfolio\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AssessorAssessment\",\"assessId\":\"CS006_TEST002\",\"unit\":\"resource:org.moocon.core.ModuleUnit#CS006B\",\"terminal\":true,\"weighting\":100,\"resultType\":\"GradeResult\",\"knowledgeRequired\":[\"Wireframing\",\"UX Research Techniques\",\"Research Ethics Integrity\"],\"detailsMd\":\"Details\",\"testType\":\"Marking\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"A\",\"descriptions\":\"a comprehensive and critical understanding of the topic;                            a high level of independent thinking and development of own ideas;                            an ability to develop a complex argument solution or evaluation;                            a highly critical evaluation of the relevant literature and theories, where appropriate;                            a high standard of competence in the appropriate use of methodologies for analysis;                            and synthesis;                            an excellent ability to communicate clearly and concisely;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"B\",\"descriptions\":\"a critical understanding of the topic;                            independent thinking and development of own ideas;                            an ability to develop a well-structured argument, solution, evaluation or explanation;                            a critical evaluation of the relevant literature and theories, where appropriate;                            a high standard of competence in the use of appropriate methodologies for analysis                            and synthesis;                            an ability to communicate clearly and concisely;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"C\",\"descriptions\":\"a good understanding of the topic;                            some evidence of independent thinking and development of own ideas;                            an ability to develop a structured argument, solution, evaluation or explanation;                            evaluation of the relevant literature and theories, where appropriate;                            competence in the use of appropriate methodologies for analysis and synthesis;                            an ability to communicate clearly and effectively;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"D\",\"descriptions\":\"evidence of a coherent understanding of the key aspects of the topic;                            limited independent thinking and development of own ideas;                            the ability to present a sufficiently structured argument, solution, or explanation;                            evidence of some evaluation of the relevant literature and theories, where appropriate;                            use of the relevant methodologies for analysis and synthesis to an acceptable standard;                            evidence of effective communication skills;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"E\",\"descriptions\":\"evidence of some understanding of key aspects of the topic;                            no evidence of independent thinking and development of own ideas;                            some ability to present an appropriate argument, solution or explanation;                            limited evaluation of the relevant literature and theories;                            limited use of relevant methodologies;                            little evidence of effective communication;\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"F\",\"descriptions\":\"Unacceptable work that fails to demonstrate relevant knowledge, understanding or skills                            to any significant degree and/or clearly fails to meet key learning outcomes in the                            assessed task;\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Functionality Correctness\",\"details\":\"How accurately does the implementation fulfil the task requirements\",\"weighting\":30},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Design of Control Flows\",\"details\":\"How well does the implementation employ if/ else conditions and while/ for loops\",\"weighting\":50},{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Readability and good coding practices\",\"details\":\"How well does the implementation use identations and classes\",\"weighting\":20}],\"passingStandard\":3}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setdefault T02",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc1d7f22-8189-45bd-9689-83504b2e0a06",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/wallet/T02%40moocon-beta/setDefault",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"wallet",
+						"T02%40moocon-beta",
+						"setDefault"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course CS003",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b91e1f4-7155-44e1-9d56-8d758c20c883",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"CS003\",\"teachers\":[\"resource:org.moocon.core.Teacher#T02\"],\"modTitle\":\"Introduction to Android Applications\",\"cost\":20,\"prerequisites\":[],\"corequisites\":[],\"learningObjectives\":[\"Develop a simple app using basic Java and Android features.\",\"Understand and utilise inheritance and polymorphism features.\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"CS003A\",\"mod\":\"resource:org.moocon.core.CourseModule#CS003\",\"unitTitle\":\"Introduction to Android Studio\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"CS003_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#CS003A\",\"terminal\":false,\"weighting\":50,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"How to write a simple Android app\",\"Java primitive Java data types\",\"Output to the Android display views\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"CS003B\",\"mod\":\"resource:org.moocon.core.CourseModule#CS003\",\"unitTitle\":\"Inheritance and Polymorphism\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"CS003_TEST002\",\"unit\":\"resource:org.moocon.core.ModuleUnit#CS003B\",\"terminal\":false,\"weighting\":50,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Inheritance: What? When? How?\",\"Polymorphism: What? When? How?\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course CS004",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "807b39ba-a7d9-4187-98ba-eb804b8c2ef5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"CS004\",\"teachers\":[\"resource:org.moocon.core.Teacher#T02\"],\"modTitle\":\"Intermediate Android Applications\",\"cost\":20,\"prerequisites\":[\"resource:org.moocon.core.CourseModule#CM003\"],\"corequisites\":[],\"learningObjectives\":[\"Program core Android app components, such as intents, activities, and broadcast receivers together with Android concurrency frameworks and basic Java file I/O classes.\",\"Use of the Git version control system.\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"CS004A\",\"mod\":\"resource:org.moocon.core.CourseModule#CS004\",\"unitTitle\":\"Android App Components\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"CS004_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#CM001A\",\"terminal\":false,\"weighting\":50,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Intents\",\"Activities\",\"Broadcast Receivers\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"CS004B\",\"mod\":\"resource:org.moocon.core.CourseModule#CS004\",\"unitTitle\":\"Git VCS\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"CS004_TEST002\",\"unit\":\"resource:org.moocon.core.ModuleUnit#CS004B\",\"terminal\":false,\"weighting\":50,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Git basic commands\",\"Branching\",\"Merge and conflicts\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course BIO001",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff034d3c-41e5-40ec-b77b-2bde72ec8b5c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"BIO001\",\"teachers\":[\"resource:org.moocon.core.Teacher#T02\"],\"modTitle\":\"Exploring Genetics\",\"cost\":10,\"prerequisites\":[],\"corequisites\":[],\"learningObjectives\":[\"Understanding of the key principles underlying the theory and practice of genetics.\",\"Awareness of recent advances in genetics.\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"BIO001A\",\"mod\":\"resource:org.moocon.core.CourseModule#BIO001\",\"unitTitle\":\"Basic Principles of Genetics\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"BIO001_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#BIO001A\",\"terminal\":false,\"weighting\":100,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Molecules to populations and species\",\"How genetics is studied through experiments on model organisms\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setdefault T03",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "50c82f86-fc92-4df0-9025-f88bfdc367b5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/wallet/T03%40moocon-beta/setDefault",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"wallet",
+						"T03%40moocon-beta",
+						"setDefault"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course MED001",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9a592ab7-8e00-4244-9aea-c596c61dece6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"MED001\",\"teachers\":[\"resource:org.moocon.core.Teacher#T03\"],\"modTitle\":\"Epidemics\",\"cost\":10,\"prerequisites\":[],\"corequisites\":[],\"learningObjectives\":[\"Demonstrate knowledge of the origins, spread and control of infectious disease epidemics.\",\"Demonstrate understanding of the importance of effective communication about epidemics.\",\"Demonstrate understanding of key contemporary issues relating to epidemics from a global perspective.\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"MED001A\",\"mod\":\"resource:org.moocon.core.CourseModule#MED001\",\"unitTitle\":\"Origins of Novel Pathogens\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"MED001_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#MED001A\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Molecules to populations and species\",\"How genetics is studied through experiments on model organisms\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"MED001B\",\"mod\":\"resource:org.moocon.core.CourseModule#MED001\",\"unitTitle\":\"Spread of Infectious Diseases\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"MED001_TEST002\",\"unit\":\"resource:org.moocon.core.ModuleUnit#MED001B\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Molecules to populations and species\",\"How genetics is studied through experiments on model organisms\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"MED001C\",\"mod\":\"resource:org.moocon.core.CourseModule#MED001\",\"unitTitle\":\"Medical and Public Health Countermeasures\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"MED001_TEST003\",\"unit\":\"resource:org.moocon.core.ModuleUnit#MED001C\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Molecules to populations and species\",\"How genetics is studied through experiments on model organisms\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setdefault T04",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d563c45d-7287-408f-94c1-762363b90fa1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/wallet/T04%40moocon-beta/setDefault",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"wallet",
+						"T04%40moocon-beta",
+						"setDefault"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course PHIL001",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e8f89be9-1a40-4228-838e-eeb130255373",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"PHIL001\",\"teachers\":[\"resource:org.moocon.core.Teacher#T04\"],\"modTitle\":\"Human Rights Theory and Philosophy\",\"cost\":10,\"prerequisites\":[],\"corequisites\":[],\"learningObjectives\":[\"Describe and critique human rights theories and philosophies.\",\"Critically analyse political, policy and moral issues using a human rights framework.\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"PHIL001A\",\"mod\":\"resource:org.moocon.core.CourseModule#PHIL001\",\"unitTitle\":\"The Universal Declaration of Human Rights\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"PHIL001_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#PHIL001A\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"What do we mean by human rights?\",\"Modern perspectives on human rights\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"PHIL001B\",\"mod\":\"resource:org.moocon.core.CourseModule#PHIL001\",\"unitTitle\":\"Postmodern Critiques\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"PHIL001_TEST002\",\"unit\":\"resource:org.moocon.core.ModuleUnit#PHIL001B\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Human rights and the postcolonial and decolonial critiques\",\"Human rights beyond western perspectives\",\"Human rights and the feminist critiques\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"PHIL001C\",\"mod\":\"resource:org.moocon.core.CourseModule#PHIL001\",\"unitTitle\":\"Minority Rights\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"PHIL001_TEST003\",\"unit\":\"resource:org.moocon.core.ModuleUnit#PHIL001C\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Sexual Orientation, gender identity and human rights\",\"Disability and human rights\",\"Human rights and seeking asylum\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create course BUS001",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3acc220-f9b9-4a4f-8539-cb05141a6f30",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Access-Token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"$class\":\"org.moocon.core.CreateModule\",\"mod\":{\"$class\":\"org.moocon.core.CourseModule\",\"modId\":\"BUS001\",\"teachers\":[\"resource:org.moocon.core.Teacher#T04\"],\"modTitle\":\"Digital Branding and Engagement\",\"cost\":20,\"prerequisites\":[],\"corequisites\":[],\"learningObjectives\":[\"The inter-relationship between paid, owned and earned media.\",\"Consumer change and how it is altering brand communications.\",\"Content marketing and how owned content can be distributed across company-owned digital media assets.\",\"The value of Earned Media which interests your audience .\"],\"units\":[{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"BUS001A\",\"mod\":\"resource:org.moocon.core.CourseModule#BUS001\",\"unitTitle\":\"The Digital Consumer\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"BUS001_TEST001\",\"unit\":\"resource:org.moocon.core.ModuleUnit#BUS001A\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Consumer empowerment\",\"Consumer participation and engagement\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"BUS001B\",\"mod\":\"resource:org.moocon.core.CourseModule#BUS001\",\"unitTitle\":\"Content Marketing\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"BUS001_TEST002\",\"unit\":\"resource:org.moocon.core.ModuleUnit#BUS001B\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Different strategies for content distribution\",\"Challenges associated with content marketing\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}},{\"$class\":\"org.moocon.core.ModuleUnit\",\"unitId\":\"BUS001C\",\"mod\":\"resource:org.moocon.core.CourseModule#BUS001\",\"unitTitle\":\"Owned vs Earned Media\",\"materialMd\":\"https://www.youtube.com/watch?v=Ukg_U3CnJWI\",\"assessment\":{\"$class\":\"org.moocon.core.AutoAssessment\",\"assessId\":\"BUS001_TEST003\",\"unit\":\"resource:org.moocon.core.ModuleUnit#BUS001C\",\"terminal\":false,\"weighting\":33,\"resultType\":\"PassFailResult\",\"knowledgeRequired\":[\"Impact of owned media decision making\",\"Range of engagement platforms\",\"Strategies for shaping earned media\"],\"detailsMd\":\"Details\",\"testType\":\"Equivalence\",\"testFile\":\"data:text/plain;base64,SGVsbG8gV29ybGQhCg==\",\"gradeDescriptors\":[{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"PASS\",\"descriptions\":\"The test file is the same as your submission\"},{\"$class\":\"org.moocon.core.GradeDescriptor\",\"grade\":\"FAIL\",\"descriptions\":\"The test file is not the same as your submission\"}],\"criteria\":[{\"$class\":\"org.moocon.core.MarkingCriterion\",\"heading\":\"Equivalence\",\"details\":\"How alike is the test file compared with your submission\",\"weighting\":100}],\"passingStandard\":0}}]}}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/org.moocon.core.CreateModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"org.moocon.core.CreateModule"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "92785381-9892-4b07-abfd-709bf6abc0c6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "dae79f3d-7c77-4bff-9870-66e5c829024a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "f4c2870e-a4ed-4c7c-b242-2b342bf42187",
+			"key": "token",
+			"value": "UQWkH8jJmz8LR8RIixtOSI5N3MyBb84ekvrRBMxWXDALG5qegmYAxsN1nLVvHa6V",
+			"type": "string",
+			"description": ""
+		}
+	]
+}

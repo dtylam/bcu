@@ -3,11 +3,18 @@ To run a local Hyperledger Fabric composer instance in Linux:
 
 https://hyperledger.github.io/composer/tutorials/developer-tutorial.html
 
-To start this blockchain network on Fabric and load participants:
+To start this blockchain network on Fabric and create the blockchain peers:
 
 ```
-cd {to your-clone-directory}
+cd <your-clone-directory>
 ./start.sh
+```
+
+Then, import the participant login cards, and the example course data:
+```
+cd <your-clone-directory>/newman
+newman run import_cards.json -e moocon_envir_vars.json
+newman run import_courses.json -e moocon_envir_vars.json
 ```
 
 To stop this blockchain network and clean-up (essential or your next runs would not work):
@@ -42,6 +49,7 @@ See bottom for class diagram of assets.
 `SubmitResult`
 `ProposeCurriculum`
 `ApproveCurriculum`
+`SignCertificate`
 
 **Events**
 `SubmissionUploaded`
