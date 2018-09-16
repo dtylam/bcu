@@ -58,13 +58,13 @@ rule Learner_NsubTX {
     action: ALLOW
 }
 
-rule Learner_BMTX {
-    description: "Allow learners to BeginModule"
-    participant: "org.moocon.core.Learner"
-    operation: CREATE, READ
-    resource: "org.moocon.core.BeginModule"
-    action: ALLOW
-}
+// rule Learner_BMTX {
+//     description: "Allow learners to BeginModule"
+//     participant: "org.moocon.core.Learner"
+//     operation: CREATE, READ
+//     resource: "org.moocon.core.BeginModule"
+//     action: ALLOW
+// }
 
 rule Learner_Learner {
     description: "Allow all learners to update their own information"
@@ -108,12 +108,12 @@ rule Learner_AutoAssessRequest {
     participant: "org.moocon.core.Learner"
     operation: CREATE
     resource: "org.moocon.core.AutoAssessRequest"
-    transaction: "org.moocon.core.AutoAssess"
+    transaction: "org.moocon.core.AddSubmission"
     // condition: ( === p.getIdentifier())
     action: ALLOW
 }
 
-rule Teacher_Update_Cert_2 {
+rule Learner_Update_Cert {
     description: "Allow all learners to update cert via AddSubmission"
     participant: "org.moocon.core.Learner"
     operation: UPDATE
@@ -122,15 +122,15 @@ rule Teacher_Update_Cert_2 {
     action: ALLOW
 }
 
-rule Learner_Submission_Update {
-    description: "Allow all learners to update their own submissions with AutoAssess"
-    participant(p): "org.moocon.core.Learner"
-    operation: UPDATE
-    resource(r): "org.moocon.core.Submission"
-    transaction(tx): "org.moocon.core.AutoAssess"
-    condition: (r.learner.getIdentifier() == p.getIdentifier())
-    action: ALLOW
-}
+// rule Learner_Submission_Update {
+//     description: "Allow all learners to update their own submissions with AutoAssess"
+//     participant(p): "org.moocon.core.Learner"
+//     operation: UPDATE
+//     resource(r): "org.moocon.core.Submission"
+//     transaction(tx): "org.moocon.core.AutoAssess"
+//     condition: (r.learner.getIdentifier() == p.getIdentifier())
+//     action: ALLOW
+// }
 
 rule Learner_Curriculum {
     description: "Allow all learners to update their own Curriculum with propose tx"

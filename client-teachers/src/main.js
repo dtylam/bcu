@@ -16,6 +16,7 @@ import MySubs from './MySubs.vue'
 import GenCert from './GenCert.vue'
 
 const vueConfig = require('vue-config')
+// REPLACE configs.Token with your own access token from localhost:3000/auth/github
 const configs = {
     API: 'http://localhost:3000/api/',
     Token: 'UQWkH8jJmz8LR8RIixtOSI5N3MyBb84ekvrRBMxWXDALG5qegmYAxsN1nLVvHa6V',

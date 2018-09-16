@@ -1,10 +1,11 @@
 {
   "id": "b9a9d0a3-e249-4292-99ac-4779373a8dcb",
   "name": "moocon",
+  "//": "REPLACE values.value with your own access token from localhost:3000/auth/github",
   "values": [
     {
       "key": "token",
-      "value": "y2HAuAjDAuHJqT5RmVl5WEdhBWnfyfDwSCy26u4MjJWj35oZVwlULQC4o9CYFMVd",
+      "value": "CgGYAp9lOvv5J4myRBmEC3lDHXt4jxQWqJExmBdNKIJxzWeH8Of8i2aJaTdxNopB",
       "description": "",
       "type": "text",
       "enabled": true

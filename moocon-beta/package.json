@@ -9,7 +9,7 @@
     "test": "mocha -t 0 --recursive"
   },
   "author": "dtylam",
-  "email": "cs14tyl@brunel.ac.uk",
+  "email": "dtylam@protonmail.com",
   "license": "Apache-2.0",
   "devDependencies": {
     "chai": "^3.5.0",

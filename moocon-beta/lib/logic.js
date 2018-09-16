@@ -287,27 +287,49 @@ function addSubmission(nsubtx) {
                         }
 
                         // add submission to the relevant certificates if it is a pass.
-                        submission.learner.certs.forEach(cert => {
-                            cert.curriculum.modIds.forEach(modId => {
-                                if (modId == submission.unit.mod) {
-                                    cert.subs.push(factory.newRelationship(
+                        for (var i = 0, len = submission.learner.certs.length; i < len; i++) {
+                            modIds = submission.learner.certs[i].curriculum.modIds;
+                            for (var i = 0, len = modIds.length; i < len; i++) {
+                                if (modIds[i] == submission.unit.mod) {
+                                    certs[i].subs.push(factory.newRelationship(
                                         NS, 'Submission', submission.subId))
                                     // switch certificate visibility on if the assessment is terminal
-                                    if (assessment.terminal) cert.visible = true
+                                    if (assessment.terminal) certs[i].visible = true
                                     // commit updates to certificate on blockchain
                                     return getAssetRegistry(NS + '.Certificate')
                                         .then(function (certRegistry) {
-                                            return certRegistry.update(cert);
+                                            return certRegistry.update(certs[i]);
                                         }).then(function () {
-                                            if (cert.visible) {
+                                            if (certs[i].visible) {
                                                 var event = factory.newEvent(NS, 'NewCertificate');
-                                                event.certId = cert.certId;
+                                                event.certId = certs[i].certId;
                                                 emit(event);
                                             }
                                         });
                                 }
-                            })
-                        })
+                            }
+                        }
+                        // submission.learner.certs.forEach(function (cert) {
+                        //     return cert.curriculum.modIds.forEach(modId => {
+                        //         if (modId == submission.unit.mod) {
+                        //             cert.subs.push(factory.newRelationship(
+                        //                 NS, 'Submission', submission.subId))
+                        //             // switch certificate visibility on if the assessment is terminal
+                        //             if (assessment.terminal) cert.visible = true
+                        //             // commit updates to certificate on blockchain
+                        //             return getAssetRegistry(NS + '.Certificate')
+                        //                 .then(function (certRegistry) {
+                        //                     return certRegistry.update(cert);
+                        //                 }).then(function () {
+                        //                     if (cert.visible) {
+                        //                         var event = factory.newEvent(NS, 'NewCertificate');
+                        //                         event.certId = cert.certId;
+                        //                         emit(event);
+                        //                     }
+                        //                 });
+                        //         }
+                        //     });
+                        // })
                     }
                 });
         });
@@ -423,27 +445,28 @@ function submitResult(srtx) {
                 }
 
                 // add submission to the relevant certificates if it is a pass.
-                submission.learner.certs.forEach(cert => {
-                    cert.curriculum.modIds.forEach(modId => {
-                        if (modId == submission.unit.mod) {
-                            cert.subs.push(factory.newRelationship(
+                for (var i = 0, len = submission.learner.certs.length; i < len; i++) {
+                    modIds = submission.learner.certs[i].curriculum.modIds;
+                    for (var i = 0, len = modIds.length; i < len; i++) {
+                        if (modIds[i] == submission.unit.mod) {
+                            certs[i].subs.push(factory.newRelationship(
                                 NS, 'Submission', submission.subId))
                             // switch certificate visibility on if the assessment is terminal
-                            if (assessment.terminal) cert.visible = true
+                            if (assessment.terminal) certs[i].visible = true
                             // commit updates to certificate on blockchain
                             return getAssetRegistry(NS + '.Certificate')
                                 .then(function (certRegistry) {
-                                    return certRegistry.update(cert);
+                                    return certRegistry.update(certs[i]);
                                 }).then(function () {
-                                    if (cert.visible) {
+                                    if (certs[i].visible) {
                                         var event = factory.newEvent(NS, 'NewCertificate');
-                                        event.certId = cert.certId;
+                                        event.certId = certs[i].certId;
                                         emit(event);
                                     }
-                                })
+                                });
                         }
-                    })
-                })
+                    }
+                }
             }
         });
 }
