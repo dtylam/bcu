@@ -6,13 +6,25 @@ https://hyperledger.github.io/composer/tutorials/developer-tutorial.html
 To start this blockchain network on Fabric and create the blockchain peers:
 
 ```
-cd <your-clone-directory>
+cd <your-clone-directory>/moocon-beta/
 ./start.sh
 ```
 
-Then, import the participant login cards, and the example course data:
+Then, authorise your machine as a user for the API at http://localhost:3000/explorer
+You will need a GitHub account for this (https://github.com/join)
+Go to http://localhost:3000/auth/github which will login and authorise through GitHub.
+You will be then given a access token after the login redirection. 
+Copy this access token string, and paste it in these three files:
 ```
-cd <your-clone-directory>/newman
+<your-clone-directory>/moocon-beta/newman/moocon_envir_vars.json
+<your-clone-directory>/client-learners/src/main.js
+<your-clone-directory>/client-teachers/src/main.js
+```
+
+Next, import the participant login cards, and the example course data:
+
+```
+cd <your-clone-directory>/moocon-beta/newman
 newman run import_cards.json -e moocon_envir_vars.json
 newman run import_courses.json -e moocon_envir_vars.json
 ```
