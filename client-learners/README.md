@@ -1,6 +1,7 @@
 # moocon_learner_client
 
-> A Vue.js project
+> Demonstration purposes ONLY, built with Vue.js
+> It is understood that the login protocols of this application is not necessarily securely built.
 
 ## Build Setup
 
@@ -15,4 +16,17 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Copied from the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Helpful browser console commands
+
+Force the full navbar to show:
+```
+vm.$data.loggedIn = true
+```
+
+Force login skipping the login page (equiv to API call of post /wallet/{name}/setDefault):
+```
+vm.$config.uId = "T01"
+```
+Then click the "Refocus Session (dev)" button on the side navbar.

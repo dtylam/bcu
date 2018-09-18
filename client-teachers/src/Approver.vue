@@ -67,6 +67,7 @@
                             <md-input name="notes" id="notes" v-model="editingCurr.notes"/>
                             <span class="md-helper-text">Notes</span>
                         </md-field>
+                        <md-radio v-model="currCert">Certificate</md-radio>                        
                     </div>
                 </div>
                 <div style="width: 48%; float: left; padding: 0% 3%; margin: 0 1%;">
@@ -75,12 +76,13 @@
                     <md-card class="course-card-mini" v-for="course in mods" :key="course.modId">
                         <md-card-header>
                             <div class="md-subheading"><b>{{ course.modId }} {{ course.modTitle }}</b></div>
-                            <p><a>{{ course.teachers.firstName }} {{ course.teachers.lastName }}</a>, <a>{{ course.teachers.organisation }}</a></p>                            
+                            <p><a>{{ course.teachers.firstName }} {{ course.teachers.lastName }}</a>, <a>{{ course.teachers.organisation }}</a></p>
                         </md-card-header>
                         <md-card-content>
                             <li v-for="unit in course.units" :key="unit.unitId" style="margin-left: 8px;">
                                 {{ unit.unitTitle }}</li>
-                            <md-chip style="float: right; margin-bottom: 8px;">{{course.cost}} Credits</md-chip>                            
+                            <md-chip style="float: right; margin-bottom: 8px;">{{course.cost}} Credits</md-chip>
+                            <md-checkbox v-model="hasCert" :value="course.modId">Certificate</md-checkbox>
                         </md-card-content>
                     </md-card>
                     </div>
@@ -129,7 +131,9 @@ export default {
       },
       mods: [],
       postingDialog: { posting: false, success: false, message: "NA" },
-      curricula: []
+      curricula: [],
+      hasCert:[],
+      currCert: false
     };
   },
   computed: {},
@@ -204,8 +208,13 @@ export default {
       //posting
       var acObject = {
         $class: "org.moocon.core.ApproveCurriculum",
-        curriculum: this.editingCurr
+        curriculum: this.editingCurr,
+        hasCert: [this.currCert]
       };
+      this.editingCurr.modIds.forEach(modId =>{
+        if (this.hasCert.includes(modId)) acObject.hasCert.push(true)
+        else acObject.hasCert.push(false)
+      })
       fetch(API + "org.moocon.core.ApproveCurriculum", {
         method: "POST",
         body: JSON.stringify(acObject),
