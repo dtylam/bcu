@@ -75,21 +75,23 @@
                 <md-step md-label="Assessment Contract">
                   <div class="md-layout md-gutter md-alignment-top-left">
                     <div class="md-layout-item md-large-size-50 md-medium-size-100">
-                      <p><b style="text-transform: uppercase;">Knowledge Required</b></p>
+                      <h3 style="text-transform: uppercase;">Knowledge Required</h3>
                         <ol>
                           <li v-for="kr in unit.assessment.knowledgeRequired" :key="kr"> {{ kr }}</li>
                         </ol>
                       <md-divider></md-divider>
-                      <p><b style="text-transform: uppercase;">Weighting: {{unit.assessment.weighting}} %</b></p>
+                      <h3 style="text-transform: uppercase;">Weighting: {{unit.assessment.weighting}} %</h3>
+                      <md-divider></md-divider>
                       <div v-if="unit.assessment.$class.split('.')[3] != 'SelfAssessment'">
-                        <p><b style="text-transform: uppercase;">Assessment Procedures: </b>{{unit.assessment.$class.split('.')[3].replace(/([A-Z])/g, ' $1').trim()}}
+                        <h3 style="text-transform: uppercase;">Assessment Procedures: </h3>
+                        <p>&emsp;{{unit.assessment.$class.split('.')[3].replace(/([A-Z])/g, ' $1').trim()}}
                           <a v-if="unit.assessment.$class.split('.')[3] == 'AutoAssessment'" v-bind:href="unit.assessment.testFile" target="_blank">
                             <md-button class="md-raised" style="vertical-align: middle;">View Test Details</md-button></a>
                           <span v-if="unit.assessment.$class.split('.')[3] == 'AssessorAssessment'">&ensp;({{unit.assessment.testType}})</span>
                         </p>
                         <md-divider></md-divider>                        
-                        <p><b style="text-transform: uppercase;">Marking Scheme: </b></p>
-                        <p><u>Marking Criteria</u>:</p>
+                        <h3 style="text-transform: uppercase;">Marking Scheme: </h3>
+                        <p>&emsp;<u>Marking Criteria</u>:</p>
                         <md-table>
                           <md-table-row v-for="criterion in unit.assessment.criteria" :key="criterion.header">
                             <md-table-cell>{{criterion.heading}}</md-table-cell>
@@ -98,7 +100,7 @@
                           </md-table-row>
                         </md-table>
                         <md-divider></md-divider>                                                
-                        <p><u>Grade Descriptors</u>:</p>
+                        <p>&emsp;<u>Grade Descriptors</u>:</p>
                         <md-table>
                           <md-table-row v-for="gd in unit.assessment.gradeDescriptors" :key="gd.grade">
                             <md-table-cell>{{gd.grade}}</md-table-cell>
@@ -109,7 +111,7 @@
                       </div>
                     </div>
                     <div class="md-layout-item md-large-size-50 md-medium-size-100">
-                      <h3>Documents</h3>
+                      <h3 style="text-transform: uppercase;">Documents: </h3>
                       <md-card md-with-hover class="doc-card">
                         <md-ripple>
                           <md-card-header>
@@ -120,6 +122,19 @@
                           <md-card-media><md-icon class="md-size-2x">description</md-icon></md-card-media>
                           </md-card-header>
                         </md-ripple>
+                      </md-card>
+                      <h3 style="text-transform: uppercase;">Fineprints: </h3>
+                      <md-card class="md-accent">
+                        <md-card-header>
+                          <span class="md-title">This is a smart contract,</span>
+                          <p>an agreement between you and the course module leader and will be automatically fulfilled on the blockchain.</p>
+                          <span class="md-subheading">By passing this assessment you will receive:</span>
+                          <ul>
+                            <li>course progression</li>
+                            <li>curriculum progression</li>
+                            <li v-show="unit.assessment.terminal">a completion certificate</li>
+                          </ul>
+                        </md-card-header>
                       </md-card>
                     </div>
                   </div>
@@ -367,57 +382,57 @@ export default {
         });
       });
     },
-    addVivaSubmission: function(event, unitId){
+    addVivaSubmission: function(event, unitId) {
       const API = this.$config.API;
       const token = this.$config.Token;
       const uId = this.$config.uId;
-      
+
       this.postingDialog = {
         message: "Working On It",
         posting: true,
         success: false
       };
       // post
-        var asObject = {
-          $class: "org.moocon.core.AddSubmission",
-          learner: "resource:org.moocon.core.Learner#" + uId,
-          unit: "resource:org.moocon.core.ModuleUnit#" + unitId,
-          content: "NA",
-          comments: "Viva"
-        };
-        // console.log(asObject);
-        fetch(API + "org.moocon.core.AddSubmission", {
-          method: "POST",
-          body: JSON.stringify(asObject),
-          headers: new Headers({
-            "Content-Type": "application/json",
-            "X-Access-Token": token
-          })
-        }).then(response => {
-          if (!response.ok) {
-            response
-              .json()
-              .then(json => {
-                throw Error(json.error.message);
-              })
-              .catch(error => {
-                this.postingDialog = {
-                  message: error.message,
-                  posting: true,
-                  success: false
-                };
-              });
-          } else {
-            response.json().then(json => {
+      var asObject = {
+        $class: "org.moocon.core.AddSubmission",
+        learner: "resource:org.moocon.core.Learner#" + uId,
+        unit: "resource:org.moocon.core.ModuleUnit#" + unitId,
+        content: "NA",
+        comments: "Viva"
+      };
+      // console.log(asObject);
+      fetch(API + "org.moocon.core.AddSubmission", {
+        method: "POST",
+        body: JSON.stringify(asObject),
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "X-Access-Token": token
+        })
+      }).then(response => {
+        if (!response.ok) {
+          response
+            .json()
+            .then(json => {
+              throw Error(json.error.message);
+            })
+            .catch(error => {
               this.postingDialog = {
-                message: "Block Address:\n" + json.transactionId,
+                message: error.message,
                 posting: true,
-                success: true
+                success: false
               };
-              // console.log(json);
             });
-          }
-        });
+        } else {
+          response.json().then(json => {
+            this.postingDialog = {
+              message: "Block Address:\n" + json.transactionId,
+              posting: true,
+              success: true
+            };
+            // console.log(json);
+          });
+        }
+      });
     }
   }
 };

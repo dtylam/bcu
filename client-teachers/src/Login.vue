@@ -20,6 +20,7 @@
                         </md-field>
                         <md-checkbox>Remember Me</md-checkbox>
                         <md-button class="md-raised md-primary" style="float: right;" v-on:click="submitCard">Login</md-button>
+                        <p>DEV: Do not use this form if you have already imported the cards with a script.</p>
                     </md-card-content>
                 </md-card>    
             </form>
@@ -29,15 +30,6 @@
                 <md-card-header>
                     <div class="md-title my-center"><md-icon class="md-size-3x">credit_card</md-icon> Welcome, Gee Money</div>
                 </md-card-header>
-
-                <!-- <md-card-content>    
-                        <md-field>
-                            <label for="card">Upload your student card (.card) file here</label>
-                            <md-file @change="processFile($event)"/>
-                        </md-field>
-                        <md-checkbox>Remember Me</md-checkbox>
-                        <md-button class="md-raised md-primary" style="float: right;" v-on:click="submitCard">Login</md-button>
-                </md-card-content> -->
             </md-card>   
         </div>
         <hr/>

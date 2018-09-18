@@ -19,7 +19,7 @@ const vueConfig = require('vue-config')
 // REPLACE configs.Token with your own access token from localhost:3000/auth/github
 const configs = {
     API: 'http://localhost:3000/api/',
-    Token: 'wn3VfBCrH6E38iKzDQaeBNV754JzmBmlbZiI4zdhNyKXWvXCnI0X3NL5sw6HJOr6',
+    Token: 'xLsg6GGE6LarjyEOr6EWBZmhMTv3SOnJIVxxGzPc7CRFiHUwXBe812eIWNtfZgS7',
     uId: "T01"
 }
 Vue.use(vueConfig, configs)
