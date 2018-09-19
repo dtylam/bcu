@@ -347,6 +347,8 @@ export default {
           content: base64string,
           comments: this.submissionForm.comments
         };
+        // comments field cannot be null
+        if (asObject.comments == null) asObject.comments = "NA";
         // console.log(asObject);
         fetch(API + "org.moocon.core.AddSubmission", {
           method: "POST",

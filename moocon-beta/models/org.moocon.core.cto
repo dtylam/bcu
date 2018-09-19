@@ -112,7 +112,7 @@ asset Certificate identified by certId {
   --> Learner learner
   --> Teacher[] signatories
   --> Submission[] subs 
-  --> Curriculum curriculum
+  --> Curriculum curriculum optional
   o AssessmentResult overallResult optional
   o String detailsMd
   o Boolean visible default = false

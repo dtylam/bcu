@@ -93,7 +93,8 @@ See bottom for class diagram of assets.
 
 ```
 # starting the rest server as admin
-composer-rest-server -c admin@moocon-beta -n always -w true
+export COMPOSER_PROVIDERS='{"github": {"provider": "github","module": "passport-github","clientID": "7a7e96a04ef3f68ef144","clientSecret": "39eb8a7aa598829b2cde39e5b2b4b142afe04ae8","authPath": "/auth/github","callbackURL": "/auth/github/callback","successRedirect": "/","failureRedirect": "/"}}'
+composer-rest-server -c admin@moocon-beta -n always -w true -a true -m true
 
 # regen the .bna
 composer archive create -t dir -n .

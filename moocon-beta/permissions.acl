@@ -143,7 +143,7 @@ rule Learner_Curriculum {
 }
 
 rule Learner_Curriculum_Read {
-    description: "Allow all learners to update their own Curriculum with propose tx"
+    description: "Allow all learners to read their own Curriculum objects"
     participant(p): "org.moocon.core.Learner"
     operation: READ
     resource(r): "org.moocon.core.Curriculum"
@@ -156,6 +156,15 @@ rule Learner_ProposeCurriculum {
     participant: "org.moocon.core.Learner"
     operation: CREATE, READ
     resource: "org.moocon.core.ProposeCurriculum"
+    action: ALLOW
+}
+
+rule Learner_Cert_Read {
+    description: "Allow all learners to read their own Certs"
+    participant(p): "org.moocon.core.Learner"
+    operation: READ
+    resource(r): "org.moocon.core.Certificate"
+    condition: (r.learner.getIdentifier() == p.getIdentifier())
     action: ALLOW
 }
 
@@ -332,15 +341,23 @@ rule Teacher_Curriculum{
 }
 
 rule Teacher_ApproveCurriculum {
-    description: "Allow all teacher to create ApproveCurriculum tx"
+    description: "Allow all teachers to create ApproveCurriculum tx"
     participant: "org.moocon.core.Teacher"
     operation: CREATE, READ
     resource: "org.moocon.core.ApproveCurriculum"
     action: ALLOW
 }
 
+rule Teacher_Cert_Read {
+    description: "Allow all teachers to read all Certs (not ideal, further policy needed)"
+    participant: "org.moocon.core.Teacher"
+    operation: READ
+    resource: "org.moocon.core.Certificate"
+    action: ALLOW
+}
+
 rule Teacher_SignCertificate {
-    description: "Allow all teacher to create SignCertificate tx with signer == themselves"
+    description: "Allow all teachers to create SignCertificate tx with signer == themselves"
     participant(p): "org.moocon.core.Teacher"
     operation: CREATE, READ
     resource(r): "org.moocon.core.SignCertificate"

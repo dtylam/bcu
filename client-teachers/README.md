@@ -20,11 +20,6 @@ Copied from the [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## Helpful browser console commands
 
-Force the full navbar to show:
-```
-vm.$data.loggedIn = true
-```
-
 Force login skipping the login page (equiv to API call of post /wallet/{name}/setDefault):
 ```
 vm.$config.uId = "T01"

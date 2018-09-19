@@ -20,7 +20,7 @@
                         </md-field>
                         <md-checkbox>Remember Me</md-checkbox>
                         <md-button class="md-raised md-primary" style="float: right;" v-on:click="submitCard">Login</md-button>
-                        <p>DEV: Do not use this form if you have already imported the cards with a script.</p>
+                        <p>DEV: Do not use this form if user cards are already imported with newman.</p>
                     </md-card-content>
                 </md-card>    
             </form>
@@ -139,7 +139,7 @@ export default {
 .login {
   margin: 2% auto 5% auto;
   vertical-align: middle;
-  max-width: 480px;
+  max-width: 560px;
 }
 .infobox {
   text-align: center;

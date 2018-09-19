@@ -153,7 +153,7 @@ function approveCurriculum(actx) {
                                         // certId for curriculum
                                         certId = actx.curriculum.currId
                                         // certId for courses
-                                        if (i != 0) certId = certId + currMods[i - 1].modId
+                                        if (i != 0) certId = certId + '_' + currMods[i - 1].modId
 
                                         // new cert fields
                                         var newcert = factory.newResource(NS, 'Certificate', certId);
@@ -207,30 +207,30 @@ function approveCurriculum(actx) {
 
 /**
  * Tx3 AddSubmission
- * @param {org.moocon.core.AddSubmission} nsubtx - transaction object nsubtx
+ * @param {org.moocon.core.AddSubmission} astx - transaction object astx
  * @transaction
  */
-function addSubmission(nsubtx) {
+function addSubmission(astx) {
     var NS = 'org.moocon.core';
     var factory = getFactory();
     var date = new Date(); //today's date
     //create id for the new Submission asset
-    var subId = nsubtx.unit.unitId + "_" + nsubtx.learner.uId + "_" +
+    var subId = astx.unit.unitId + "_" + astx.learner.uId + "_" +
         Math.random().toString(36).substring(3)
     //filling in fields for new Submission asset
     var submission = factory.newResource(NS, 'Submission', subId);
-    submission.learner = nsubtx.learner;
+    submission.learner = astx.learner;
     submission.teacherAssigned = factory.newRelationship(
-        NS, 'Teacher', nsubtx.unit.mod.teachers[0].getIdentifier());
-    submission.unit = nsubtx.unit;
-    submission.content = nsubtx.content;
-    submission.comments = nsubtx.comments;
+        NS, 'Teacher', astx.unit.mod.teachers[0].getIdentifier());
+    submission.unit = astx.unit;
+    submission.content = astx.content;
+    submission.comments = astx.comments;
     submission.timeAdded = date;
     submission.learner.subs.push(factory.newRelationship(
         NS, 'Submission', subId));
 
     // For auto assessments, send request to example marking API
-    var assessment = nsubtx.unit.assessment;
+    var assessment = astx.unit.assessment;
     if (assessment.instanceOf(NS + '.AutoAssessment')) {
         //create new AutoAssessRequest asset
         var request = factory.newResource(
@@ -288,21 +288,30 @@ function addSubmission(nsubtx) {
 
                         // add submission to the relevant certificates if it is a pass.
                         for (var i = 0, len = submission.learner.certs.length; i < len; i++) {
-                            modIds = submission.learner.certs[i].curriculum.modIds;
+                            var thisCert = submission.learner.certs[i];
+                            // for a course certificate
+                            if (thisCert.certId.length > 12){ 
+                                modIds = [thisCert.certId.split('_')[2]];
+                            }
+                            // for a curriculum certificate
+                            else {
+                                modIds = thisCert.curriculum.modIds;
+                            }
+                            // add this submission to the cert
                             for (var i = 0, len = modIds.length; i < len; i++) {
                                 if (modIds[i] == submission.unit.mod) {
-                                    certs[i].subs.push(factory.newRelationship(
+                                    thisCert.subs.push(factory.newRelationship(
                                         NS, 'Submission', submission.subId))
                                     // switch certificate visibility on if the assessment is terminal
-                                    if (assessment.terminal) certs[i].visible = true
+                                    if (assessment.terminal) thisCert.visible = true
                                     // commit updates to certificate on blockchain
                                     return getAssetRegistry(NS + '.Certificate')
                                         .then(function (certRegistry) {
-                                            return certRegistry.update(certs[i]);
+                                            return certRegistry.update(thisCert);
                                         }).then(function () {
-                                            if (certs[i].visible) {
+                                            if (thisCert.visible) {
                                                 var event = factory.newEvent(NS, 'NewCertificate');
-                                                event.certId = certs[i].certId;
+                                                event.certId = thisCert.certId;
                                                 emit(event);
                                             }
                                         });
@@ -446,21 +455,30 @@ function submitResult(srtx) {
 
                 // add submission to the relevant certificates if it is a pass.
                 for (var i = 0, len = submission.learner.certs.length; i < len; i++) {
-                    modIds = submission.learner.certs[i].curriculum.modIds;
+                    var thisCert = submission.learner.certs[i];
+                    // for a course certificate
+                    if (thisCert.certId.length > 12){ 
+                        modIds = [thisCert.certId.split('_')[2]];
+                    }
+                    // for a curriculum certificate
+                    else {
+                        modIds = thisCert.curriculum.modIds;
+                    }
+                    // add this submission to the cert
                     for (var i = 0, len = modIds.length; i < len; i++) {
                         if (modIds[i] == submission.unit.mod) {
-                            certs[i].subs.push(factory.newRelationship(
+                            thisCert.subs.push(factory.newRelationship(
                                 NS, 'Submission', submission.subId))
                             // switch certificate visibility on if the assessment is terminal
-                            if (assessment.terminal) certs[i].visible = true
+                            if (assessment.terminal) thisCert.visible = true
                             // commit updates to certificate on blockchain
                             return getAssetRegistry(NS + '.Certificate')
                                 .then(function (certRegistry) {
-                                    return certRegistry.update(certs[i]);
+                                    return certRegistry.update(thisCert);
                                 }).then(function () {
-                                    if (certs[i].visible) {
+                                    if (thisCert.visible) {
                                         var event = factory.newEvent(NS, 'NewCertificate');
-                                        event.certId = certs[i].certId;
+                                        event.certId = thisCert.certId;
                                         emit(event);
                                     }
                                 });

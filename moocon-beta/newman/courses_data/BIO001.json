@@ -25,7 +25,7 @@
                     "$class": "org.moocon.core.AutoAssessment",
                     "assessId": "BIO001_TEST001",
                     "unit": "resource:org.moocon.core.ModuleUnit#BIO001A",
-                    "terminal": false,
+                    "terminal": true,
                     "weighting": 100,
                     "resultType": "PassFailResult",
                     "knowledgeRequired": [
