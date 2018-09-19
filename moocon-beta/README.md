@@ -4,7 +4,7 @@ should be deployed to Hyperledger Fabric v1.0
 
 It is recommended to run this as a local development instance on Linux OS, 
 see the installations guide here:
-https://hyperledger.github.io/composer/v0.16/installing/development-tools.html
+https://hyperledger.github.io/composer/v0.16/installing/development-tools.html<br/>
 Newer versions of Hyperledger Composer and Fabric contain breaking changes, 
 so do make sure you pull the right packages by specifying versions, eg: 
 
@@ -26,9 +26,9 @@ cd <your-clone-directory>/moocon-beta/
 ./start.sh
 ```
 
-Then, authorise your machine as a user for the API at http://localhost:3000/explorer
+Then, authorise your machine as a user for the API at http://localhost:3000/explorer<br/>
 You will need a GitHub account for this (https://github.com/join)
-Go to http://localhost:3000/auth/github which will login and authorise through GitHub.
+Go to http://localhost:3000/auth/github which will login and authorise through GitHub.<br/>
 You will be then given a access token after the login redirection. 
 Copy this access token string, and paste it in the following three files:
 ```

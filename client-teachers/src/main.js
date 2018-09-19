@@ -13,13 +13,13 @@ import Historian from './Historian.vue'
 import Login from './Login.vue'
 import AllCourses from './AllCourses.vue'
 import MySubs from './MySubs.vue'
-import GenCert from './GenCert.vue'
+import SignCert from './SignCert.vue'
 
 const vueConfig = require('vue-config')
 // REPLACE configs.Token with your own access token from localhost:3000/auth/github
 const configs = {
     API: 'http://localhost:3000/api/',
-    Token: 'ad5xZKLZpYDSyjEv9CZpHStq6pyB952AHuGGaMoGFIg9oxBPch8xIfX6H95XbbDe',
+    Token: 'ynlitfQkuRU6b7SyiGFFS4Zu4P1mqcUUSTEtMo2OycI0n3BW76NIE16THrsOO135',
     uId: "T01"
 }
 Vue.use(vueConfig, configs)
@@ -57,6 +57,14 @@ var vm = new Vue({
             switch (obj.$class) {
                 case "org.moocon.core.BalanceChanges":
                 case "org.moocon.core.ResultAvailable":
+                    break;
+                case "org.moocon.core.NewCertificate":
+                    listItem = {
+                        icon: "card_membership",
+                        title: "New Certificate awaiting signature",
+                        sub: "ID" + obj.certId,
+                        p: obj.timestamp + "; Address: " + obj.eventId,
+                    }
                     break;
                 case "org.moocon.core.SubmissionUploaded":
                     if (obj.teacherId == vm.$config.uId) {
@@ -136,8 +144,8 @@ var vm = new Vue({
         },
         // Gen Certificates md-list-item
         selectGenCert: function (event) {
-            this.toolbarText = "Issue Certificates"
-            this.currentView = GenCert
+            this.toolbarText = "Review Certificates"
+            this.currentView = SignCert
         },
         selectHistorian: function (event) {
             this.toolbarText = "My History"

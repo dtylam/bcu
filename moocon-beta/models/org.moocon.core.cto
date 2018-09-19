@@ -111,8 +111,9 @@ asset Certificate identified by certId {
   o String certId
   --> Learner learner
   --> Teacher[] signatories
-  --> Submission[] subs 
   --> Curriculum curriculum optional
+  o String organisation optional
+  o String[] subIds 
   o AssessmentResult overallResult optional
   o String detailsMd
   o Boolean visible default = false
@@ -233,17 +234,17 @@ concept MarkingCriterion {
 * planned transactions, not implemented
 */ 
 
-transaction EditModule {
-  o CourseModule mod
-}
+// transaction EditModule {
+//   o CourseModule mod
+// }
 
-transaction EditUnit {
-  o ModuleUnit unit
-}
+// transaction EditUnit {
+//   o ModuleUnit unit
+// }
 
-transaction EditAssessment {
-  o Assessment assessment
-}
+// transaction EditAssessment {
+//   o Assessment assessment
+// }
 
 // /*
 // *  Future Work: Peer and Self Assessments

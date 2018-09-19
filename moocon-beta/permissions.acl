@@ -350,9 +350,10 @@ rule Teacher_ApproveCurriculum {
 
 rule Teacher_Cert_Read {
     description: "Allow all teachers to read all Certs (not ideal, further policy needed)"
-    participant: "org.moocon.core.Teacher"
+    participant(p): "org.moocon.core.Teacher"
     operation: READ
-    resource: "org.moocon.core.Certificate"
+    resource(r): "org.moocon.core.Certificate"
+    condition: (p.organisation == r.organisation)
     action: ALLOW
 }
 

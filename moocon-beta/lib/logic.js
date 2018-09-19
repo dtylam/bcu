@@ -159,9 +159,10 @@ function approveCurriculum(actx) {
                                         var newcert = factory.newResource(NS, 'Certificate', certId);
                                         newcert.learner = learner;
                                         newcert.signatories = [];
-                                        newcert.subs = [];
+                                        newcert.subIds = [];
                                         newcert.curriculum = factory.newRelationship(
                                             NS, 'Curriculum', actx.curriculum.currId);
+                                        newcert.organisation = actx.curriculum.teacher.organisation;
                                         newcert.detailsMd = "Blockchain University is not a real university. These course are not real taught courses. All names and characters are fictional. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam turpis, consectetur.";
 
                                         // create this new cert on blockchain
@@ -242,7 +243,7 @@ function addSubmission(astx) {
         //send the request with post(url,data)
         var url = "https://moocon-js-marking.herokuapp.com/equivalence/";
         return post(url, request).then(function (resp) {
-            console.log('@debug assess ext resp ', JSON.stringify(resp));
+            // console.log('@debug assess ext resp ', JSON.stringify(resp));
             request.response = resp.body;
             //store record of AutoAssessRequest
             getAssetRegistry(NS + '.AutoAssessRequest')
@@ -289,6 +290,7 @@ function addSubmission(astx) {
                         // add submission to the relevant certificates if it is a pass.
                         for (var i = 0, len = submission.learner.certs.length; i < len; i++) {
                             var thisCert = submission.learner.certs[i];
+                            var modIds;
                             // for a course certificate
                             if (thisCert.certId.length > 12){ 
                                 modIds = [thisCert.certId.split('_')[2]];
@@ -299,13 +301,12 @@ function addSubmission(astx) {
                             }
                             // add this submission to the cert
                             for (var i = 0, len = modIds.length; i < len; i++) {
-                                if (modIds[i] == submission.unit.mod) {
-                                    thisCert.subs.push(factory.newRelationship(
-                                        NS, 'Submission', submission.subId))
+                                if (modIds[i] == submission.unit.mod.modId) {
+                                    thisCert.subIds.push(submission.subId)
                                     // switch certificate visibility on if the assessment is terminal
                                     if (assessment.terminal) thisCert.visible = true
                                     // commit updates to certificate on blockchain
-                                    return getAssetRegistry(NS + '.Certificate')
+                                    getAssetRegistry(NS + '.Certificate')
                                         .then(function (certRegistry) {
                                             return certRegistry.update(thisCert);
                                         }).then(function () {
@@ -318,27 +319,6 @@ function addSubmission(astx) {
                                 }
                             }
                         }
-                        // submission.learner.certs.forEach(function (cert) {
-                        //     return cert.curriculum.modIds.forEach(modId => {
-                        //         if (modId == submission.unit.mod) {
-                        //             cert.subs.push(factory.newRelationship(
-                        //                 NS, 'Submission', submission.subId))
-                        //             // switch certificate visibility on if the assessment is terminal
-                        //             if (assessment.terminal) cert.visible = true
-                        //             // commit updates to certificate on blockchain
-                        //             return getAssetRegistry(NS + '.Certificate')
-                        //                 .then(function (certRegistry) {
-                        //                     return certRegistry.update(cert);
-                        //                 }).then(function () {
-                        //                     if (cert.visible) {
-                        //                         var event = factory.newEvent(NS, 'NewCertificate');
-                        //                         event.certId = cert.certId;
-                        //                         emit(event);
-                        //                     }
-                        //                 });
-                        //         }
-                        //     });
-                        // })
                     }
                 });
         });
@@ -456,6 +436,7 @@ function submitResult(srtx) {
                 // add submission to the relevant certificates if it is a pass.
                 for (var i = 0, len = submission.learner.certs.length; i < len; i++) {
                     var thisCert = submission.learner.certs[i];
+                    var modIds;
                     // for a course certificate
                     if (thisCert.certId.length > 12){ 
                         modIds = [thisCert.certId.split('_')[2]];
@@ -466,13 +447,12 @@ function submitResult(srtx) {
                     }
                     // add this submission to the cert
                     for (var i = 0, len = modIds.length; i < len; i++) {
-                        if (modIds[i] == submission.unit.mod) {
-                            thisCert.subs.push(factory.newRelationship(
-                                NS, 'Submission', submission.subId))
+                        if (modIds[i] == submission.unit.mod.modId) {
+                            thisCert.subIds.push(submission.subId)
                             // switch certificate visibility on if the assessment is terminal
                             if (assessment.terminal) thisCert.visible = true
                             // commit updates to certificate on blockchain
-                            return getAssetRegistry(NS + '.Certificate')
+                            getAssetRegistry(NS + '.Certificate')
                                 .then(function (certRegistry) {
                                     return certRegistry.update(thisCert);
                                 }).then(function () {

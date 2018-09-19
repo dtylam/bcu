@@ -32,7 +32,7 @@
                       <span v-else style="text-transform: uppercase; color: green;">signed</span>
                     </md-table-cell>                
                     <md-table-cell>
-                      <md-button class="md-raised">View</md-button>
+                      <md-button class="md-raised">Review</md-button>
                     </md-table-cell>                                                                                                                                       
                 </md-table-row>
             </md-table>
@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: "MyCerts",
+  name: "SignCert",
   data: function() {
     return {
       offline: false,

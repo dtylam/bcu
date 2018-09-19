@@ -18,7 +18,7 @@ const vueConfig = require('vue-config')
 // REPLACE configs.Token with your own access token from localhost:3000/auth/github
 const configs = {
     API: 'http://localhost:3000/api/',
-    Token: 'ad5xZKLZpYDSyjEv9CZpHStq6pyB952AHuGGaMoGFIg9oxBPch8xIfX6H95XbbDe',
+    Token: 'ynlitfQkuRU6b7SyiGFFS4Zu4P1mqcUUSTEtMo2OycI0n3BW76NIE16THrsOO135',
     uId: null
 }
 Vue.use(vueConfig, configs)
@@ -55,6 +55,14 @@ var vm = new Vue({
             var listItem;
             switch (obj.$class) {
                 case "org.moocon.core.CourseModuleCompleted":
+                    break;
+                case "org.moocon.core.NewCertificate":
+                    listItem = {
+                        icon: "card_membership",
+                        title: "New Certificate! Congratulations!",
+                        sub: "ID" + obj.certId,
+                        p: obj.timestamp + "; Address: " + obj.eventId,
+                    }
                     break;
                 case "org.moocon.core.BalanceChanges":
                     listItem = {
