@@ -2,6 +2,8 @@
 
 ![Project concept diagram](docs_img/comparison_moocon.png)
 
+<img src="https://github.com/dtylam/bcu/blob/master/docs_img/comparison_moocon.png" width="48">
+
 Blockchain University is a proof-of-concept e-Learning platform built on the 
 [Hyperledger Composer framework](https://github.com/hyperledger/composer) 
 for a public permissioned blockchain.
@@ -12,10 +14,10 @@ curriculum personalisation, and learner privacy.
 
 ## Demo Video
 
-<div align="center">
-  <a href="https://www.youtube.com/watch?v=MP5jSItMenI">
+<a href="https://www.youtube.com/watch?v=MP5jSItMenI">
   <img src="https://img.youtube.com/vi/MP5jSItMenI/0.jpg" alt="Demo Video Screenshot"></a>
-</div>
+
+## Components
 
 ![Project architecture diagram](docs_img/architecture.png)
 
