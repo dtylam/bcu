@@ -10,6 +10,13 @@ It fulfils educational assessments and personalised curricula with smart contrac
 It has the potential to improve several core learning experiences, such as assessments, 
 curriculum personalisation, and learner privacy.
 
+## Demo Video
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=MP5jSItMenI">
+  <img src="https://img.youtube.com/vi/MP5jSItMenI/0.jpg" alt="Demo Video Screenshot"></a>
+</div>
+
 ![Project architecture diagram](docs_img/architecture.png)
 
 Components built:
