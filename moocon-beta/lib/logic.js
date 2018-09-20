@@ -425,7 +425,7 @@ function submitResult(srtx) {
         }).then(function () {
             if (submission.result.passed) {
                 // Emit a CourseModuleCompleted event if the assessment is terminal and a pass
-                if (assessment.terminal) {
+                if (aa.terminal) {
                     var event = factory.newEvent(NS, 'CourseModuleCompleted');
                     event.teacherAssigned = submission.teacherAssigned;
                     event.submission = submission;
@@ -450,7 +450,7 @@ function submitResult(srtx) {
                         if (modIds[i] == submission.unit.mod.modId) {
                             thisCert.subIds.push(submission.subId)
                             // switch certificate visibility on if the assessment is terminal
-                            if (assessment.terminal) thisCert.visible = true
+                            if (aa.terminal) thisCert.visible = true
                             // commit updates to certificate on blockchain
                             getAssetRegistry(NS + '.Certificate')
                                 .then(function (certRegistry) {

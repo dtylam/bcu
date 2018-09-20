@@ -6,57 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "import L01",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "7f6ac7a6-c8a7-4ff3-940a-97f9407eb2fa",
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 204\", function () {",
-							"    pm.response.to.have.status(204);",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "X-Access-Token",
-						"value": "{{token}}"
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "card",
-							"src": "../L01.card",
-							"description": "",
-							"type": "file"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:3000/api/wallet/import",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"wallet",
-						"import"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "import L02",
 			"event": [
 				{
