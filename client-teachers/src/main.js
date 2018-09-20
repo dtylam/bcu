@@ -19,7 +19,7 @@ const vueConfig = require('vue-config')
 // REPLACE configs.Token with your own access token from localhost:3000/auth/github
 const configs = {
     API: 'http://localhost:3000/api/',
-    Token: 'SnEJ8tX7Jwo2B8hEDDm1js1jcsjy9GgGWktyrC55L77NMKYADKUDaBOJB2M5ZQYF',
+    Token: '81UymKN6JvgiBGVhiWxLti7to0CZXGm3oFjF0vRKFVZhcWGbGOMBIzqOPcC6BHJt',
     uId: "T01"
 }
 Vue.use(vueConfig, configs)
@@ -65,6 +65,7 @@ var vm = new Vue({
                         sub: "ID" + obj.certId,
                         p: obj.timestamp + "; Address: " + obj.eventId,
                     }
+                    vm.$data.networkEvents.unshift(listItem)
                     break;
                 case "org.moocon.core.SubmissionUploaded":
                     if (obj.teacherId == vm.$config.uId) {
@@ -78,13 +79,13 @@ var vm = new Vue({
                     }
                     break;
                 case "org.moocon.core.CourseModuleCompleted":
-                    listItem = {
-                        icon: "card_membership",
-                        title: "Certificate Pending for " + obj.modId,
-                        sub: "Submission ID: " + obj.submission.split("#")[1],
-                        p: obj.timestamp + "; Address: " + obj.eventId,
-                    }
-                    vm.$data.networkEvents.unshift(listItem)
+                    // listItem = {
+                    //     icon: "card_membership",
+                    //     title: "Certificate Pending for " + obj.modId,
+                    //     sub: "Submission ID: " + obj.submission.split("#")[1],
+                    //     p: obj.timestamp + "; Address: " + obj.eventId,
+                    // }
+                    // vm.$data.networkEvents.unshift(listItem)
                     break;
                 case "org.moocon.core.CurriculumProposed":
                     listItem = {

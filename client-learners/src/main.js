@@ -18,7 +18,7 @@ const vueConfig = require('vue-config')
 // REPLACE configs.Token with your own access token from localhost:3000/auth/github
 const configs = {
     API: 'http://localhost:3000/api/',
-    Token: 'SnEJ8tX7Jwo2B8hEDDm1js1jcsjy9GgGWktyrC55L77NMKYADKUDaBOJB2M5ZQYF',
+    Token: '81UymKN6JvgiBGVhiWxLti7to0CZXGm3oFjF0vRKFVZhcWGbGOMBIzqOPcC6BHJt',
     uId: null
 }
 Vue.use(vueConfig, configs)
@@ -63,6 +63,8 @@ var vm = new Vue({
                         sub: "ID" + obj.certId,
                         p: obj.timestamp + "; Address: " + obj.eventId,
                     }
+            vm.$data.networkEvents.unshift(listItem)
+
                     break;
                 case "org.moocon.core.BalanceChanges":
                     listItem = {
@@ -72,6 +74,8 @@ var vm = new Vue({
                         sub: "Related Course(s): " + obj.details,
                         p: obj.timestamp + "; Address: " + obj.eventId,
                     }
+            vm.$data.networkEvents.unshift(listItem)
+
                     break;
                 case "org.moocon.core.SubmissionUploaded":
                     listItem = {
@@ -80,6 +84,8 @@ var vm = new Vue({
                         sub: "Submission ID: " + obj.submission.split("#")[1],
                         p: obj.timestamp + "; Address: " + obj.eventId,
                     }
+            vm.$data.networkEvents.unshift(listItem)
+
                     break;
                 case "org.moocon.core.ResultAvailable":
                     listItem = {
@@ -88,6 +94,8 @@ var vm = new Vue({
                         sub: "Submission ID: " + obj.submission.split("#")[1],
                         p: obj.timestamp + "; Address: " + obj.eventId,
                     }
+            vm.$data.networkEvents.unshift(listItem)
+
                     break;
                 case "org.moocon.core.CurriculumProposed":
                     listItem = {
@@ -96,6 +104,8 @@ var vm = new Vue({
                         sub: "Curriculum ID: " + obj.curriculum.split("#")[1],
                         p: obj.timestamp + "; Address: " + obj.eventId,
                     }
+            vm.$data.networkEvents.unshift(listItem)
+
                     break;
                 case "org.moocon.core.CurriculumApproved":
                     listItem = {
@@ -104,6 +114,8 @@ var vm = new Vue({
                         sub: "Curriculum ID: " + obj.curriculum.split("#")[1],
                         p: obj.timestamp + "; Address: " + obj.eventId,
                     }
+            vm.$data.networkEvents.unshift(listItem)
+
                     break;
                 default:
                     listItem = {
@@ -112,10 +124,10 @@ var vm = new Vue({
                         sub: "Lipsum",
                         p: obj.eventId,
                     }
+            vm.$data.networkEvents.unshift(listItem)
+
                     break;
             }
-
-            vm.$data.networkEvents.unshift(listItem)
             console.log(obj);
         }
     },
