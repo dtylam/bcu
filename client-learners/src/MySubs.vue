@@ -51,6 +51,10 @@
                 </md-table-row>
             </md-table>
         </div>
+        <!-- Feedback Dialog -->
+        <!-- <md-dialog :md-active.sync="showFeedbackDialog">
+          
+        </md-dialog> -->
     </div>
 </template>
 
@@ -61,7 +65,8 @@ export default {
     return {
       offline: false,
       loading: true,
-      records: []
+      records: [],
+      // showFeedbackDialog: false
     };
   },
   created: function() {

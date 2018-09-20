@@ -18,13 +18,13 @@
                     <md-table-head>Signed</md-table-head>  
                     <md-table-head></md-table-head>    
                 </md-table-row>
-                <md-table-row v-for="record in records" :key="record.subId">
+                <md-table-row v-for="record in records" :key="record.certId">
                     <md-table-cell>{{ record.certId }}</md-table-cell>
                     <!-- <md-table-cell>{{ new Intl.DateTimeFormat('en-GB', { 
                       weekday: "short", year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"
                       }).format(new Date(record.timeAdded))}}</md-table-cell> -->
                     <md-table-cell><a>{{ record.subIds }}</a></md-table-cell>
-                    <md-table-cell>{{ record.curriculum.currId }}</md-table-cell>    
+                    <md-table-cell>{{ record.curriculum.split('#')[1] }}</md-table-cell>    
                     <md-table-cell>{{ record.organisation }}</md-table-cell>  
                     <md-table-cell>{{ record.overallResult }}</md-table-cell>     
                     <md-table-cell>
